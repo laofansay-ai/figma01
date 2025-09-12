@@ -13,28 +13,14 @@ import {
   ChevronRight,
   Edit
 } from 'lucide-react'
-import { useUser } from '../context/UserContext'
+import { useAuth } from '../hooks/useAuth'
+import LoginForm from '../components/auth/LoginForm'
+import SignUpForm from '../components/auth/SignUpForm'
 import { Button } from '@/components/ui/button'
 
 const Account = () => {
-  const { user, isAuthenticated, login, logout } = useUser()
-  const [showLoginForm, setShowLoginForm] = useState(false)
-  const [loginData, setLoginData] = useState({ email: '', password: '' })
-
-  const handleLogin = (e) => {
-    e.preventDefault()
-    // Mock login - in real app this would call an API
-    const mockUser = {
-      id: 1,
-      name: 'John Doe',
-      email: loginData.email,
-      phone: '+1 234 567 8900',
-      avatar: '/api/placeholder/100/100',
-      joinDate: '2024-01-15'
-    }
-    login(mockUser)
-    setShowLoginForm(false)
-  }
+  const { user, loading, signOut, isAuthenticated } = useAuth()
+  const [authMode, setAuthMode] = useState('login') // 'login' or 'signup'
 
   const menuItems = [
     {
@@ -83,6 +69,17 @@ const Account = () => {
     }
   ]
 
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gray-50 pb-20 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-yellow-500 mx-auto mb-4"></div>
+          <p className="text-gray-600">Loading...</p>
+        </div>
+      </div>
+    )
+  }
+
   if (!isAuthenticated) {
     return (
       <div className="pb-20 bg-white min-h-screen">
@@ -91,88 +88,29 @@ const Account = () => {
           <h1 className="text-2xl font-bold text-gray-900">Account</h1>
         </header>
 
-        {showLoginForm ? (
-          /* Login Form */
-          <div className="px-4">
-            <div className="bg-white rounded-3xl p-6 shadow-sm border border-gray-100">
-              <h2 className="text-xl font-bold text-gray-900 mb-6">Welcome Back</h2>
-              <form onSubmit={handleLogin} className="space-y-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Email
-                  </label>
-                  <input
-                    type="email"
-                    value={loginData.email}
-                    onChange={(e) => setLoginData({...loginData, email: e.target.value})}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
-                    placeholder="Enter your email"
-                    required
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Password
-                  </label>
-                  <input
-                    type="password"
-                    value={loginData.password}
-                    onChange={(e) => setLoginData({...loginData, password: e.target.value})}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
-                    placeholder="Enter your password"
-                    required
-                  />
-                </div>
-                <Button 
-                  type="submit"
-                  className="w-full bg-yellow-500 hover:bg-yellow-600 text-white py-3 rounded-xl font-semibold"
-                >
-                  Sign In
-                </Button>
-              </form>
-              <div className="mt-4 text-center">
-                <button
-                  onClick={() => setShowLoginForm(false)}
-                  className="text-gray-600 hover:text-gray-800"
-                >
-                  Back to options
-                </button>
-              </div>
-            </div>
-          </div>
-        ) : (
-          /* Login Options */
-          <div className="px-4">
-            <div className="text-center mb-8">
-              <div className="w-24 h-24 bg-gray-100 rounded-full mx-auto mb-4 flex items-center justify-center">
-                <User size={32} className="text-gray-400" />
-              </div>
-              <h2 className="text-xl font-bold text-gray-900 mb-2">Sign in to your account</h2>
-              <p className="text-gray-600">Access your orders, wishlist, and more</p>
-            </div>
+        <div className="px-4">
+          {authMode === 'login' ? (
+            <LoginForm
+              onSuccess={() => {
+                // User will be automatically updated via auth state change
+              }}
+              onSwitchToSignUp={() => setAuthMode('signup')}
+            />
+          ) : (
+            <SignUpForm
+              onSuccess={() => {
+                // User will be automatically updated via auth state change
+              }}
+              onSwitchToLogin={() => setAuthMode('login')}
+            />
+          )}
 
-            <div className="space-y-4">
-              <Button
-                onClick={() => setShowLoginForm(true)}
-                className="w-full bg-yellow-500 hover:bg-yellow-600 text-white py-4 rounded-2xl font-semibold text-lg"
-              >
-                Sign In
-              </Button>
-              <Button
-                variant="outline"
-                className="w-full border-2 border-gray-300 text-gray-700 py-4 rounded-2xl font-semibold text-lg hover:bg-gray-50"
-              >
-                Create Account
-              </Button>
-            </div>
-
-            <div className="mt-8 text-center">
-              <Link to="/" className="text-yellow-500 font-medium">
-                Continue as Guest
-              </Link>
-            </div>
+          <div className="mt-8 text-center">
+            <Link to="/" className="text-yellow-500 font-medium">
+              Continue as Guest
+            </Link>
           </div>
-        )}
+        </div>
       </div>
     )
   }
@@ -190,17 +128,17 @@ const Account = () => {
 
         {/* User Info */}
         <div className="flex items-center space-x-4">
-          <div className="w-16 h-16 bg-gray-100 rounded-full overflow-hidden">
-            <img
-              src={user.avatar}
-              alt={user.name}
-              className="w-full h-full object-cover"
-            />
+          <div className="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center">
+            <User size={24} className="text-yellow-600" />
           </div>
           <div className="flex-1">
-            <h2 className="text-xl font-bold text-gray-900">{user.name}</h2>
-            <p className="text-gray-600">{user.email}</p>
-            <p className="text-sm text-gray-500">Member since {new Date(user.joinDate).getFullYear()}</p>
+            <h2 className="text-xl font-bold text-gray-900">
+              {user?.user_metadata?.full_name || user?.email?.split('@')[0] || 'User'}
+            </h2>
+            <p className="text-gray-600">{user?.email}</p>
+            <p className="text-sm text-gray-500">
+              Member since {new Date(user?.created_at).getFullYear()}
+            </p>
           </div>
         </div>
       </header>
@@ -209,15 +147,15 @@ const Account = () => {
       <section className="px-4 mb-6">
         <div className="grid grid-cols-3 gap-4">
           <div className="bg-white rounded-2xl p-4 text-center">
-            <div className="text-2xl font-bold text-yellow-500 mb-1">12</div>
+            <div className="text-2xl font-bold text-yellow-500 mb-1">0</div>
             <div className="text-sm text-gray-600">Orders</div>
           </div>
           <div className="bg-white rounded-2xl p-4 text-center">
-            <div className="text-2xl font-bold text-yellow-500 mb-1">8</div>
+            <div className="text-2xl font-bold text-yellow-500 mb-1">0</div>
             <div className="text-sm text-gray-600">Wishlist</div>
           </div>
           <div className="bg-white rounded-2xl p-4 text-center">
-            <div className="text-2xl font-bold text-yellow-500 mb-1">$2,450</div>
+            <div className="text-2xl font-bold text-yellow-500 mb-1">$0</div>
             <div className="text-sm text-gray-600">Spent</div>
           </div>
         </div>
@@ -257,7 +195,7 @@ const Account = () => {
       {/* Logout */}
       <section className="px-4">
         <button
-          onClick={logout}
+          onClick={signOut}
           className="w-full bg-white rounded-2xl p-4 flex items-center justify-center space-x-3 text-red-500 hover:bg-red-50 transition-colors"
         >
           <LogOut size={20} />

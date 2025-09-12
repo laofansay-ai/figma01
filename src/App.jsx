@@ -1,34 +1,20 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import { CartProvider } from './context/CartContext'
-import { UserProvider } from './context/UserContext'
-import Navigation from './components/common/Navigation'
-import Home from './pages/Home'
-import Categories from './pages/Categories'
-import ProductList from './pages/ProductList'
-import ProductDetail from './pages/ProductDetail'
-import Cart from './pages/Cart'
-import Account from './pages/Account'
 import './App.css'
 
 function App() {
   return (
-    <UserProvider>
-      <CartProvider>
-        <Router>
-          <div className="min-h-screen bg-background">
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/categories" element={<Categories />} />
-              <Route path="/products" element={<ProductList />} />
-              <Route path="/product/:id" element={<ProductDetail />} />
-              <Route path="/cart" element={<Cart />} />
-              <Route path="/account" element={<Account />} />
-            </Routes>
-            <Navigation />
-          </div>
-        </Router>
-      </CartProvider>
-    </UserProvider>
+    <div className="min-h-screen bg-gray-100 flex items-center justify-center">
+      <div className="text-center">
+        <h1 className="text-4xl font-bold text-gray-900 mb-4">ULMO</h1>
+        <p className="text-xl text-gray-600 mb-8">Modern E-Commerce Platform</p>
+        <div className="bg-white rounded-lg shadow-lg p-8 max-w-md">
+          <h2 className="text-2xl font-semibold mb-4">Welcome to Ulmo</h2>
+          <p className="text-gray-600 mb-6">Your modern furniture and decor destination</p>
+          <button className="bg-yellow-500 text-white px-6 py-3 rounded-lg hover:bg-yellow-600 transition-colors">
+            Get Started
+          </button>
+        </div>
+      </div>
+    </div>
   )
 }
 

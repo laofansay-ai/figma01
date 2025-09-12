@@ -1,45 +1,83 @@
+import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { Search, Bell, Heart } from 'lucide-react'
+import { 
+  Search, 
+  Bell, 
+  Heart, 
+  Star,
+  ShoppingBag,
+  TrendingUp,
+  Zap,
+  Shield,
+  Truck
+} from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import { useCart } from '../context/CartContext'
+import { productService } from '../services/productService'
 
 const Home = () => {
-  const featuredProducts = [
-    {
-      id: 1,
-      name: 'Modern Wooden Chair',
-      price: 299,
-      image: '/api/placeholder/300/300',
-      category: 'Furniture'
-    },
-    {
-      id: 2,
-      name: 'Ceramic Vase',
-      price: 89,
-      image: '/api/placeholder/300/300',
-      category: 'Decor'
-    },
-    {
-      id: 3,
-      name: 'Dining Table',
-      price: 599,
-      image: '/api/placeholder/300/300',
-      category: 'Furniture'
-    },
-    {
-      id: 4,
-      name: 'Table Lamp',
-      price: 149,
-      image: '/api/placeholder/300/300',
-      category: 'Lighting'
-    }
-  ]
+  const { addToCart } = useCart()
+  const [searchQuery, setSearchQuery] = useState('')
+  const [featuredProducts, setFeaturedProducts] = useState([])
+  const [categories, setCategories] = useState([])
+  const [loading, setLoading] = useState(true)
 
-  const categories = [
-    { name: 'Furniture', icon: '🪑', count: 120 },
-    { name: 'Decor', icon: '🏺', count: 85 },
-    { name: 'Lighting', icon: '💡', count: 45 },
-    { name: 'Textiles', icon: '🛏️', count: 67 }
-  ]
+  useEffect(() => {
+    const loadData = async () => {
+      try {
+        // Load featured products
+        const { data: featured } = await productService.getFeaturedProducts(4)
+        if (featured) {
+          setFeaturedProducts(featured)
+        }
+
+        // Load categories
+        const { data: categoriesData } = await productService.getCategories()
+        if (categoriesData) {
+          setCategories(categoriesData)
+        }
+      } catch (error) {
+        console.error('Error loading home page data:', error)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    loadData()
+  }, [])
+
+  const handleAddToCart = (product) => {
+    addToCart({
+      id: product.id,
+      name: product.name,
+      price: product.price,
+      image: product.images?.[0] || '/api/placeholder/300/300',
+      quantity: 1
+    })
+  }
+
+  const formatPrice = (price) => {
+    return new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'USD'
+    }).format(price)
+  }
+
+  const calculateDiscount = (price, comparePrice) => {
+    if (!comparePrice || comparePrice <= price) return 0
+    return Math.round(((comparePrice - price) / comparePrice) * 100)
+  }
+
+  if (loading) {
+    return (
+      <div className="pb-20 bg-gradient-to-b from-yellow-50 to-white min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-yellow-500 mx-auto mb-4"></div>
+          <p className="text-gray-600">Loading...</p>
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div className="pb-20 bg-gradient-to-b from-yellow-50 to-white min-h-screen">
@@ -48,7 +86,7 @@ const Home = () => {
         <div className="flex items-center justify-between mb-6">
           <div>
             <h1 className="text-3xl font-bold text-gray-900">ULMO</h1>
-            <p className="text-gray-600 text-sm">Modern Living</p>
+            <p className="text-gray-600 text-sm">Modern furniture & decor</p>
           </div>
           <div className="flex items-center space-x-3">
             <button className="p-2 rounded-full bg-white shadow-sm">
@@ -61,45 +99,50 @@ const Home = () => {
         </div>
 
         {/* Search Bar */}
-        <div className="relative">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
+        <div className="relative mb-6">
+          <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
           <input
             type="text"
-            placeholder="Search for products..."
-            className="w-full pl-10 pr-4 py-3 bg-white rounded-2xl shadow-sm border border-gray-100 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
+            placeholder="Search furniture, decor..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="w-full pl-12 pr-4 py-4 bg-white rounded-2xl border-0 shadow-sm focus:outline-none focus:ring-2 focus:ring-yellow-500"
           />
         </div>
-      </header>
 
-      {/* Hero Section */}
-      <section className="px-4 mb-8">
-        <div className="bg-gradient-to-r from-yellow-400 to-yellow-500 rounded-3xl p-6 text-white">
-          <h2 className="text-2xl font-bold mb-2">New Collection</h2>
-          <p className="text-yellow-100 mb-4">Discover our latest furniture designs</p>
-          <Button className="bg-white text-yellow-500 hover:bg-gray-100">
-            Shop Now
-          </Button>
+        {/* Hero Banner */}
+        <div className="bg-gradient-to-r from-yellow-400 to-yellow-500 rounded-3xl p-6 mb-6 text-white">
+          <div className="flex items-center justify-between">
+            <div className="flex-1">
+              <h2 className="text-2xl font-bold mb-2">New Collection</h2>
+              <p className="text-yellow-100 mb-4">Discover our latest furniture designs</p>
+              <Button className="bg-white text-yellow-500 hover:bg-yellow-50 font-semibold">
+                Shop Now
+              </Button>
+            </div>
+            <div className="w-24 h-24 bg-white/20 rounded-full flex items-center justify-center">
+              <TrendingUp size={32} className="text-white" />
+            </div>
+          </div>
         </div>
-      </section>
+      </header>
 
       {/* Categories */}
       <section className="px-4 mb-8">
         <div className="flex items-center justify-between mb-4">
           <h3 className="text-xl font-bold text-gray-900">Categories</h3>
-          <Link to="/categories" className="text-yellow-500 font-medium">
-            See all
-          </Link>
+          <Link to="/categories" className="text-yellow-500 font-medium">See All</Link>
         </div>
         <div className="grid grid-cols-2 gap-4">
           {categories.map((category, index) => (
             <Link
-              key={index}
-              to={`/products?category=${category.name.toLowerCase()}`}
-              className="bg-white rounded-2xl p-4 shadow-sm border border-gray-100 hover:shadow-md transition-shadow"
+              key={category.id || index}
+              to={`/categories/${category.slug}`}
+              className="bg-white rounded-2xl p-4 shadow-sm hover:shadow-md transition-shadow"
             >
               <div className="text-3xl mb-2">{category.icon}</div>
-              <h4 className="font-semibold text-gray-900">{category.name}</h4>
-              <p className="text-gray-500 text-sm">{category.count} items</p>
+              <h4 className="font-semibold text-gray-900 mb-1">{category.name}</h4>
+              <p className="text-sm text-gray-500">{category.productCount || 0} items</p>
             </Link>
           ))}
         </div>
@@ -108,50 +151,94 @@ const Home = () => {
       {/* Featured Products */}
       <section className="px-4 mb-8">
         <div className="flex items-center justify-between mb-4">
-          <h3 className="text-xl font-bold text-gray-900">Featured</h3>
-          <Link to="/products" className="text-yellow-500 font-medium">
-            See all
-          </Link>
+          <h3 className="text-xl font-bold text-gray-900">Featured Products</h3>
+          <Link to="/products" className="text-yellow-500 font-medium">See All</Link>
         </div>
         <div className="grid grid-cols-2 gap-4">
           {featuredProducts.map((product) => (
-            <Link
-              key={product.id}
-              to={`/product/${product.id}`}
-              className="bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 hover:shadow-md transition-shadow"
-            >
-              <div className="aspect-square bg-gray-100 relative">
+            <div key={product.id} className="bg-white rounded-2xl overflow-hidden shadow-sm">
+              <div className="relative">
                 <img
-                  src={product.image}
+                  src={product.images?.[0] || '/api/placeholder/300/300'}
                   alt={product.name}
-                  className="w-full h-full object-cover"
+                  className="w-full h-40 object-cover"
                 />
-                <button className="absolute top-3 right-3 p-2 rounded-full bg-white shadow-sm">
-                  <Heart size={16} className="text-gray-400" />
+                {product.comparePrice && (
+                  <div className="absolute top-2 left-2 bg-red-500 text-white text-xs px-2 py-1 rounded-full">
+                    -{calculateDiscount(product.price, product.comparePrice)}%
+                  </div>
+                )}
+                <button className="absolute top-2 right-2 p-2 bg-white/80 rounded-full">
+                  <Heart size={16} className="text-gray-600" />
                 </button>
               </div>
               <div className="p-4">
-                <p className="text-xs text-gray-500 mb-1">{product.category}</p>
-                <h4 className="font-semibold text-gray-900 mb-2 line-clamp-2">
-                  {product.name}
-                </h4>
-                <p className="text-lg font-bold text-yellow-500">
-                  ${product.price}
-                </p>
+                <Link to={`/products/${product.slug || product.id}`}>
+                  <h4 className="font-semibold text-gray-900 mb-1 line-clamp-2">{product.name}</h4>
+                </Link>
+                <p className="text-sm text-gray-500 mb-2">{product.category}</p>
+                
+                {/* Rating */}
+                {product.rating && (
+                  <div className="flex items-center mb-2">
+                    <div className="flex items-center">
+                      <Star size={14} className="text-yellow-400 fill-current" />
+                      <span className="text-sm text-gray-600 ml-1">{product.rating}</span>
+                    </div>
+                    {product.reviewCount && (
+                      <span className="text-sm text-gray-400 ml-1">({product.reviewCount})</span>
+                    )}
+                  </div>
+                )}
+
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-2">
+                    <span className="text-lg font-bold text-gray-900">
+                      {formatPrice(product.price)}
+                    </span>
+                    {product.comparePrice && (
+                      <span className="text-sm text-gray-400 line-through">
+                        {formatPrice(product.comparePrice)}
+                      </span>
+                    )}
+                  </div>
+                  <button
+                    onClick={() => handleAddToCart(product)}
+                    className="p-2 bg-yellow-500 text-white rounded-xl hover:bg-yellow-600 transition-colors"
+                  >
+                    <ShoppingBag size={16} />
+                  </button>
+                </div>
               </div>
-            </Link>
+            </div>
           ))}
         </div>
       </section>
 
-      {/* Special Offer */}
+      {/* Features */}
       <section className="px-4 mb-8">
-        <div className="bg-gray-900 rounded-3xl p-6 text-white">
-          <h3 className="text-xl font-bold mb-2">Special Offer</h3>
-          <p className="text-gray-300 mb-4">Get 20% off on your first order</p>
-          <Button className="bg-yellow-500 text-white hover:bg-yellow-600">
-            Claim Offer
-          </Button>
+        <div className="grid grid-cols-3 gap-4">
+          <div className="text-center">
+            <div className="w-12 h-12 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-2">
+              <Truck size={20} className="text-yellow-600" />
+            </div>
+            <p className="text-sm font-medium text-gray-900">Free Shipping</p>
+            <p className="text-xs text-gray-500">On orders over $100</p>
+          </div>
+          <div className="text-center">
+            <div className="w-12 h-12 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-2">
+              <Shield size={20} className="text-yellow-600" />
+            </div>
+            <p className="text-sm font-medium text-gray-900">Secure Payment</p>
+            <p className="text-xs text-gray-500">100% protected</p>
+          </div>
+          <div className="text-center">
+            <div className="w-12 h-12 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-2">
+              <Zap size={20} className="text-yellow-600" />
+            </div>
+            <p className="text-sm font-medium text-gray-900">Fast Delivery</p>
+            <p className="text-xs text-gray-500">2-3 business days</p>
+          </div>
         </div>
       </section>
     </div>

@@ -1,0 +1,1400 @@
+{
+  "categories": {
+    "furniture": {
+      "name": "Furniture",
+      "icon": "🪑",
+      "description": "Modern furniture for your home",
+      "subcategories": [
+        "chairs",
+        "tables",
+        "sofas",
+        "storage",
+        "desks"
+      ]
+    },
+    "decor": {
+      "name": "Decor",
+      "icon": "🏺",
+      "description": "Beautiful home decorations",
+      "subcategories": [
+        "vases",
+        "artwork",
+        "mirrors",
+        "plants",
+        "candles"
+      ]
+    },
+    "lighting": {
+      "name": "Lighting",
+      "icon": "💡",
+      "description": "Stylish lighting solutions",
+      "subcategories": [
+        "pendant",
+        "floor",
+        "table",
+        "ceiling",
+        "wall"
+      ]
+    },
+    "textiles": {
+      "name": "Textiles",
+      "icon": "🛏️",
+      "description": "Comfortable textiles and fabrics",
+      "subcategories": [
+        "cushions",
+        "throws",
+        "rugs",
+        "curtains",
+        "bedding"
+      ]
+    }
+  },
+  "products": [
+    {
+      "name": "Pine Modern Wooden Chair - Natural",
+      "slug": "pine-modern-wooden-chair--natural",
+      "description": "A beautiful modern wooden chair with ergonomic design. Perfect for dining rooms, offices, or any space that needs a touch of contemporary style.",
+      "short_description": "Pine modern wooden chair in natural",
+      "price": 379,
+      "compare_price": 474,
+      "category": "furniture",
+      "subcategory": "chairs",
+      "brand": "Ulmo",
+      "images": [
+        "https://images.pexels.com/photos/1000000/pexels-photo-1000000.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+        "https://images.pexels.com/photos/1000001/pexels-photo-1000001.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+        "https://images.pexels.com/photos/1000002/pexels-photo-1000002.jpeg?auto=compress&cs=tinysrgb&h=650&w=940"
+      ],
+      "variants": {
+        "colors": [
+          "natural",
+          "dark brown",
+          "black"
+        ],
+        "materials": [
+          "oak",
+          "walnut"
+        ]
+      },
+      "dimensions": {
+        "length": 56.8,
+        "width": 64.9,
+        "height": 89.6
+      },
+      "inventory_quantity": 6,
+      "is_featured": true,
+      "tags": [
+        "furniture",
+        "chairs",
+        "pine",
+        "natural"
+      ],
+      "weight": 6.5,
+      "sku": "ULM-FUR-2979"
+    },
+    {
+      "name": "Pine Modern Wooden Chair - Natural",
+      "slug": "pine-modern-wooden-chair--natural",
+      "description": "A beautiful modern wooden chair with ergonomic design. Perfect for dining rooms, offices, or any space that needs a touch of contemporary style.",
+      "short_description": "Pine modern wooden chair in natural",
+      "price": 312,
+      "compare_price": 430,
+      "category": "furniture",
+      "subcategory": "chairs",
+      "brand": "Ulmo",
+      "images": [
+        "https://images.pexels.com/photos/1000000/pexels-photo-1000000.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+        "https://images.pexels.com/photos/1000001/pexels-photo-1000001.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+        "https://images.pexels.com/photos/1000002/pexels-photo-1000002.jpeg?auto=compress&cs=tinysrgb&h=650&w=940"
+      ],
+      "variants": {
+        "colors": [
+          "natural",
+          "dark brown",
+          "black"
+        ],
+        "materials": [
+          "oak",
+          "walnut"
+        ]
+      },
+      "dimensions": {
+        "length": 62.7,
+        "width": 48.1,
+        "height": 82.5
+      },
+      "inventory_quantity": 15,
+      "is_featured": true,
+      "tags": [
+        "furniture",
+        "chairs",
+        "pine",
+        "natural"
+      ],
+      "weight": 23.1,
+      "sku": "ULM-FUR-1066"
+    },
+    {
+      "name": "Mesh Ergonomic Office Chair - White",
+      "slug": "mesh-ergonomic-office-chair--white",
+      "description": "Professional office chair with lumbar support and adjustable height. Designed for long hours of comfortable work.",
+      "short_description": "Mesh ergonomic office chair in white",
+      "price": 434,
+      "compare_price": 529,
+      "category": "furniture",
+      "subcategory": "chairs",
+      "brand": "Ulmo",
+      "images": [
+        "https://images.pexels.com/photos/1000000/pexels-photo-1000000.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+        "https://images.pexels.com/photos/1000001/pexels-photo-1000001.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+        "https://images.pexels.com/photos/1000002/pexels-photo-1000002.jpeg?auto=compress&cs=tinysrgb&h=650&w=940"
+      ],
+      "variants": {
+        "colors": [
+          "black",
+          "gray",
+          "white"
+        ],
+        "materials": [
+          "mesh",
+          "leather"
+        ]
+      },
+      "dimensions": {
+        "length": 64.2,
+        "width": 58.5,
+        "height": 80.5
+      },
+      "inventory_quantity": 24,
+      "is_featured": true,
+      "tags": [
+        "furniture",
+        "chairs",
+        "mesh",
+        "white"
+      ],
+      "weight": 16.3,
+      "sku": "ULM-FUR-4110"
+    },
+    {
+      "name": "Mesh Ergonomic Office Chair - Blue",
+      "slug": "mesh-ergonomic-office-chair--blue",
+      "description": "Professional office chair with lumbar support and adjustable height. Designed for long hours of comfortable work.",
+      "short_description": "Mesh ergonomic office chair in blue",
+      "price": 479,
+      "compare_price": 697,
+      "category": "furniture",
+      "subcategory": "chairs",
+      "brand": "Ulmo",
+      "images": [
+        "https://images.pexels.com/photos/1000000/pexels-photo-1000000.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+        "https://images.pexels.com/photos/1000001/pexels-photo-1000001.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+        "https://images.pexels.com/photos/1000002/pexels-photo-1000002.jpeg?auto=compress&cs=tinysrgb&h=650&w=940"
+      ],
+      "variants": {
+        "colors": [
+          "black",
+          "gray",
+          "white"
+        ],
+        "materials": [
+          "mesh",
+          "leather"
+        ]
+      },
+      "dimensions": {
+        "length": 53.5,
+        "width": 45.7,
+        "height": 87.4
+      },
+      "inventory_quantity": 12,
+      "is_featured": false,
+      "tags": [
+        "furniture",
+        "chairs",
+        "mesh",
+        "blue"
+      ],
+      "weight": 9.0,
+      "sku": "ULM-FUR-8055"
+    },
+    {
+      "name": "Mesh Ergonomic Office Chair - Gray",
+      "slug": "mesh-ergonomic-office-chair--gray",
+      "description": "Professional office chair with lumbar support and adjustable height. Designed for long hours of comfortable work.",
+      "short_description": "Mesh ergonomic office chair in gray",
+      "price": 516,
+      "compare_price": 659,
+      "category": "furniture",
+      "subcategory": "chairs",
+      "brand": "Ulmo",
+      "images": [
+        "https://images.pexels.com/photos/1000000/pexels-photo-1000000.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+        "https://images.pexels.com/photos/1000001/pexels-photo-1000001.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+        "https://images.pexels.com/photos/1000002/pexels-photo-1000002.jpeg?auto=compress&cs=tinysrgb&h=650&w=940"
+      ],
+      "variants": {
+        "colors": [
+          "black",
+          "gray",
+          "white"
+        ],
+        "materials": [
+          "mesh",
+          "leather"
+        ]
+      },
+      "dimensions": {
+        "length": 59.6,
+        "width": 59.3,
+        "height": 76.5
+      },
+      "inventory_quantity": 46,
+      "is_featured": false,
+      "tags": [
+        "furniture",
+        "chairs",
+        "mesh",
+        "gray"
+      ],
+      "weight": 23.3,
+      "sku": "ULM-FUR-8562"
+    },
+    {
+      "name": "Linen Accent Armchair - Gray",
+      "slug": "linen-accent-armchair--gray",
+      "description": "Stylish accent chair that adds personality to any room. Perfect for reading corners or as statement furniture.",
+      "short_description": "Linen accent armchair in gray",
+      "price": 787,
+      "compare_price": 1137,
+      "category": "furniture",
+      "subcategory": "chairs",
+      "brand": "Ulmo",
+      "images": [
+        "https://images.pexels.com/photos/1000000/pexels-photo-1000000.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+        "https://images.pexels.com/photos/1000001/pexels-photo-1000001.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+        "https://images.pexels.com/photos/1000002/pexels-photo-1000002.jpeg?auto=compress&cs=tinysrgb&h=650&w=940"
+      ],
+      "variants": {
+        "colors": [
+          "navy",
+          "emerald",
+          "mustard"
+        ],
+        "materials": [
+          "velvet",
+          "linen"
+        ]
+      },
+      "dimensions": {
+        "length": 46.6,
+        "width": 63.5,
+        "height": 77.7
+      },
+      "inventory_quantity": 46,
+      "is_featured": false,
+      "tags": [
+        "furniture",
+        "chairs",
+        "linen",
+        "gray"
+      ],
+      "weight": 4.2,
+      "sku": "ULM-FUR-7407"
+    },
+    {
+      "name": "Velvet Accent Armchair - Navy",
+      "slug": "velvet-accent-armchair--navy",
+      "description": "Stylish accent chair that adds personality to any room. Perfect for reading corners or as statement furniture.",
+      "short_description": "Velvet accent armchair in navy",
+      "price": 521,
+      "compare_price": 748,
+      "category": "furniture",
+      "subcategory": "chairs",
+      "brand": "Ulmo",
+      "images": [
+        "https://images.pexels.com/photos/1000000/pexels-photo-1000000.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+        "https://images.pexels.com/photos/1000001/pexels-photo-1000001.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+        "https://images.pexels.com/photos/1000002/pexels-photo-1000002.jpeg?auto=compress&cs=tinysrgb&h=650&w=940"
+      ],
+      "variants": {
+        "colors": [
+          "navy",
+          "emerald",
+          "mustard"
+        ],
+        "materials": [
+          "velvet",
+          "linen"
+        ]
+      },
+      "dimensions": {
+        "length": 47.8,
+        "width": 58.0,
+        "height": 84.7
+      },
+      "inventory_quantity": 35,
+      "is_featured": false,
+      "tags": [
+        "furniture",
+        "chairs",
+        "velvet",
+        "navy"
+      ],
+      "weight": 16.4,
+      "sku": "ULM-FUR-9672"
+    },
+    {
+      "name": "Marble Coffee Table - Black",
+      "slug": "marble-coffee-table--black",
+      "description": "Modern coffee table with clean lines and functional design. Perfect centerpiece for your living room.",
+      "short_description": "Marble coffee table in black",
+      "price": 657,
+      "compare_price": 880,
+      "category": "furniture",
+      "subcategory": "tables",
+      "brand": "Ulmo",
+      "images": [
+        "https://images.pexels.com/photos/1000000/pexels-photo-1000000.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+        "https://images.pexels.com/photos/1000001/pexels-photo-1000001.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+        "https://images.pexels.com/photos/1000002/pexels-photo-1000002.jpeg?auto=compress&cs=tinysrgb&h=650&w=940"
+      ],
+      "variants": {
+        "colors": [
+          "natural",
+          "black",
+          "white"
+        ],
+        "materials": [
+          "wood",
+          "glass"
+        ]
+      },
+      "dimensions": {
+        "length": 149.3,
+        "width": 94.1,
+        "height": 76.5
+      },
+      "inventory_quantity": 20,
+      "is_featured": true,
+      "tags": [
+        "furniture",
+        "tables",
+        "marble",
+        "black"
+      ],
+      "weight": 21.4,
+      "sku": "ULM-FUR-4929"
+    },
+    {
+      "name": "Porcelain Ceramic Vase - White",
+      "slug": "porcelain-ceramic-vase--white",
+      "description": "Elegant ceramic vase perfect for fresh flowers or as a standalone decorative piece.",
+      "short_description": "Porcelain ceramic vase in white",
+      "price": 113,
+      "compare_price": 144,
+      "category": "decor",
+      "subcategory": "vases",
+      "brand": "Ulmo",
+      "images": [
+        "https://images.pexels.com/photos/1000000/pexels-photo-1000000.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+        "https://images.pexels.com/photos/1000001/pexels-photo-1000001.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+        "https://images.pexels.com/photos/1000002/pexels-photo-1000002.jpeg?auto=compress&cs=tinysrgb&h=650&w=940"
+      ],
+      "variants": {
+        "colors": [
+          "white",
+          "blue",
+          "green"
+        ],
+        "materials": [
+          "ceramic",
+          "porcelain"
+        ]
+      },
+      "dimensions": {
+        "length": 17.0,
+        "width": 16.0,
+        "height": 49.0
+      },
+      "inventory_quantity": 26,
+      "is_featured": false,
+      "tags": [
+        "decor",
+        "vases",
+        "porcelain",
+        "white"
+      ],
+      "weight": 13.9,
+      "sku": "ULM-DEC-1296"
+    },
+    {
+      "name": "Porcelain Ceramic Vase - Blue",
+      "slug": "porcelain-ceramic-vase--blue",
+      "description": "Elegant ceramic vase perfect for fresh flowers or as a standalone decorative piece.",
+      "short_description": "Porcelain ceramic vase in blue",
+      "price": 109,
+      "compare_price": 146,
+      "category": "decor",
+      "subcategory": "vases",
+      "brand": "Ulmo",
+      "images": [
+        "https://images.pexels.com/photos/1000000/pexels-photo-1000000.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+        "https://images.pexels.com/photos/1000001/pexels-photo-1000001.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+        "https://images.pexels.com/photos/1000002/pexels-photo-1000002.jpeg?auto=compress&cs=tinysrgb&h=650&w=940"
+      ],
+      "variants": {
+        "colors": [
+          "white",
+          "blue",
+          "green"
+        ],
+        "materials": [
+          "ceramic",
+          "porcelain"
+        ]
+      },
+      "dimensions": {
+        "length": 21.6,
+        "width": 25.0,
+        "height": 30.5
+      },
+      "inventory_quantity": 27,
+      "is_featured": false,
+      "tags": [
+        "decor",
+        "vases",
+        "porcelain",
+        "blue"
+      ],
+      "weight": 21.1,
+      "sku": "ULM-DEC-7027"
+    },
+    {
+      "name": "Stoneware Ceramic Vase - Blue",
+      "slug": "stoneware-ceramic-vase--blue",
+      "description": "Elegant ceramic vase perfect for fresh flowers or as a standalone decorative piece.",
+      "short_description": "Stoneware ceramic vase in blue",
+      "price": 136,
+      "compare_price": 191,
+      "category": "decor",
+      "subcategory": "vases",
+      "brand": "Ulmo",
+      "images": [
+        "https://images.pexels.com/photos/1000000/pexels-photo-1000000.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+        "https://images.pexels.com/photos/1000001/pexels-photo-1000001.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+        "https://images.pexels.com/photos/1000002/pexels-photo-1000002.jpeg?auto=compress&cs=tinysrgb&h=650&w=940"
+      ],
+      "variants": {
+        "colors": [
+          "white",
+          "blue",
+          "green"
+        ],
+        "materials": [
+          "ceramic",
+          "porcelain"
+        ]
+      },
+      "dimensions": {
+        "length": 29.8,
+        "width": 15.2,
+        "height": 36.0
+      },
+      "inventory_quantity": 17,
+      "is_featured": true,
+      "tags": [
+        "decor",
+        "vases",
+        "stoneware",
+        "blue"
+      ],
+      "weight": 16.7,
+      "sku": "ULM-DEC-8081"
+    },
+    {
+      "name": "Crystal Glass Vase Set - Green",
+      "slug": "crystal-glass-vase-set--green",
+      "description": "Set of three glass vases in different sizes. Perfect for creating beautiful arrangements.",
+      "short_description": "Crystal glass vase set in green",
+      "price": 169,
+      "compare_price": 219,
+      "category": "decor",
+      "subcategory": "vases",
+      "brand": "Ulmo",
+      "images": [
+        "https://images.pexels.com/photos/1000000/pexels-photo-1000000.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+        "https://images.pexels.com/photos/1000001/pexels-photo-1000001.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+        "https://images.pexels.com/photos/1000002/pexels-photo-1000002.jpeg?auto=compress&cs=tinysrgb&h=650&w=940"
+      ],
+      "variants": {
+        "colors": [
+          "clear",
+          "amber",
+          "blue"
+        ],
+        "materials": [
+          "glass",
+          "crystal"
+        ]
+      },
+      "dimensions": {
+        "length": 28.1,
+        "width": 23.2,
+        "height": 38.0
+      },
+      "inventory_quantity": 17,
+      "is_featured": true,
+      "tags": [
+        "decor",
+        "vases",
+        "crystal",
+        "green"
+      ],
+      "weight": 21.0,
+      "sku": "ULM-DEC-3116"
+    },
+    {
+      "name": "Crystal Glass Vase Set - Green",
+      "slug": "crystal-glass-vase-set--green",
+      "description": "Set of three glass vases in different sizes. Perfect for creating beautiful arrangements.",
+      "short_description": "Crystal glass vase set in green",
+      "price": 102,
+      "compare_price": 124,
+      "category": "decor",
+      "subcategory": "vases",
+      "brand": "Ulmo",
+      "images": [
+        "https://images.pexels.com/photos/1000000/pexels-photo-1000000.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+        "https://images.pexels.com/photos/1000001/pexels-photo-1000001.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+        "https://images.pexels.com/photos/1000002/pexels-photo-1000002.jpeg?auto=compress&cs=tinysrgb&h=650&w=940"
+      ],
+      "variants": {
+        "colors": [
+          "clear",
+          "amber",
+          "blue"
+        ],
+        "materials": [
+          "glass",
+          "crystal"
+        ]
+      },
+      "dimensions": {
+        "length": 26.9,
+        "width": 28.9,
+        "height": 48.6
+      },
+      "inventory_quantity": 46,
+      "is_featured": false,
+      "tags": [
+        "decor",
+        "vases",
+        "crystal",
+        "green"
+      ],
+      "weight": 19.0,
+      "sku": "ULM-DEC-3965"
+    },
+    {
+      "name": "Crystal Glass Vase Set - Blue",
+      "slug": "crystal-glass-vase-set--blue",
+      "description": "Set of three glass vases in different sizes. Perfect for creating beautiful arrangements.",
+      "short_description": "Crystal glass vase set in blue",
+      "price": 127,
+      "compare_price": 169,
+      "category": "decor",
+      "subcategory": "vases",
+      "brand": "Ulmo",
+      "images": [
+        "https://images.pexels.com/photos/1000000/pexels-photo-1000000.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+        "https://images.pexels.com/photos/1000001/pexels-photo-1000001.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+        "https://images.pexels.com/photos/1000002/pexels-photo-1000002.jpeg?auto=compress&cs=tinysrgb&h=650&w=940"
+      ],
+      "variants": {
+        "colors": [
+          "clear",
+          "amber",
+          "blue"
+        ],
+        "materials": [
+          "glass",
+          "crystal"
+        ]
+      },
+      "dimensions": {
+        "length": 20.2,
+        "width": 15.2,
+        "height": 35.0
+      },
+      "inventory_quantity": 16,
+      "is_featured": false,
+      "tags": [
+        "decor",
+        "vases",
+        "crystal",
+        "blue"
+      ],
+      "weight": 8.0,
+      "sku": "ULM-DEC-3538"
+    },
+    {
+      "name": "Canvas Abstract Wall Art - Gold",
+      "slug": "canvas-abstract-wall-art--gold",
+      "description": "Modern abstract artwork that adds color and personality to any wall.",
+      "short_description": "Canvas abstract wall art in gold",
+      "price": 194,
+      "compare_price": 269,
+      "category": "decor",
+      "subcategory": "artwork",
+      "brand": "Ulmo",
+      "images": [
+        "https://images.pexels.com/photos/1000000/pexels-photo-1000000.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+        "https://images.pexels.com/photos/1000001/pexels-photo-1000001.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+        "https://images.pexels.com/photos/1000002/pexels-photo-1000002.jpeg?auto=compress&cs=tinysrgb&h=650&w=940"
+      ],
+      "variants": {
+        "colors": [
+          "multicolor",
+          "black white",
+          "blue"
+        ],
+        "materials": [
+          "canvas",
+          "paper"
+        ]
+      },
+      "dimensions": {
+        "length": 97.3,
+        "width": 65.5,
+        "height": 33.4
+      },
+      "inventory_quantity": 9,
+      "is_featured": false,
+      "tags": [
+        "decor",
+        "artwork",
+        "canvas",
+        "gold"
+      ],
+      "weight": 21.7,
+      "sku": "ULM-DEC-9568"
+    },
+    {
+      "name": "Canvas Abstract Wall Art - Gold",
+      "slug": "canvas-abstract-wall-art--gold",
+      "description": "Modern abstract artwork that adds color and personality to any wall.",
+      "short_description": "Canvas abstract wall art in gold",
+      "price": 216,
+      "compare_price": 271,
+      "category": "decor",
+      "subcategory": "artwork",
+      "brand": "Ulmo",
+      "images": [
+        "https://images.pexels.com/photos/1000000/pexels-photo-1000000.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+        "https://images.pexels.com/photos/1000001/pexels-photo-1000001.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+        "https://images.pexels.com/photos/1000002/pexels-photo-1000002.jpeg?auto=compress&cs=tinysrgb&h=650&w=940"
+      ],
+      "variants": {
+        "colors": [
+          "multicolor",
+          "black white",
+          "blue"
+        ],
+        "materials": [
+          "canvas",
+          "paper"
+        ]
+      },
+      "dimensions": {
+        "length": 42.4,
+        "width": 35.1,
+        "height": 86.0
+      },
+      "inventory_quantity": 17,
+      "is_featured": true,
+      "tags": [
+        "decor",
+        "artwork",
+        "canvas",
+        "gold"
+      ],
+      "weight": 5.4,
+      "sku": "ULM-DEC-7497"
+    },
+    {
+      "name": "Glass Modern Pendant Light - Brass",
+      "slug": "glass-modern-pendant-light--brass",
+      "description": "Stylish pendant light that provides focused illumination and serves as a design statement.",
+      "short_description": "Glass modern pendant light in brass",
+      "price": 370,
+      "compare_price": 451,
+      "category": "lighting",
+      "subcategory": "pendant",
+      "brand": "Ulmo",
+      "images": [
+        "https://images.pexels.com/photos/1000000/pexels-photo-1000000.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+        "https://images.pexels.com/photos/1000001/pexels-photo-1000001.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+        "https://images.pexels.com/photos/1000002/pexels-photo-1000002.jpeg?auto=compress&cs=tinysrgb&h=650&w=940"
+      ],
+      "variants": {
+        "colors": [
+          "black",
+          "brass",
+          "white"
+        ],
+        "materials": [
+          "metal",
+          "glass"
+        ]
+      },
+      "dimensions": {
+        "length": 31.3,
+        "width": 28.3,
+        "height": 38.8
+      },
+      "inventory_quantity": 11,
+      "is_featured": false,
+      "tags": [
+        "lighting",
+        "pendant",
+        "glass",
+        "brass"
+      ],
+      "weight": 7.4,
+      "sku": "ULM-LIG-7876"
+    },
+    {
+      "name": "Marble Arc Floor Lamp - Gold",
+      "slug": "marble-arc-floor-lamp--gold",
+      "description": "Elegant arc floor lamp that provides ambient lighting and saves space.",
+      "short_description": "Marble arc floor lamp in gold",
+      "price": 281,
+      "compare_price": 417,
+      "category": "lighting",
+      "subcategory": "floor",
+      "brand": "Ulmo",
+      "images": [
+        "https://images.pexels.com/photos/1000000/pexels-photo-1000000.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+        "https://images.pexels.com/photos/1000001/pexels-photo-1000001.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+        "https://images.pexels.com/photos/1000002/pexels-photo-1000002.jpeg?auto=compress&cs=tinysrgb&h=650&w=940"
+      ],
+      "variants": {
+        "colors": [
+          "black",
+          "brass",
+          "chrome"
+        ],
+        "materials": [
+          "metal",
+          "marble"
+        ]
+      },
+      "dimensions": {
+        "length": 46.3,
+        "width": 49.3,
+        "height": 136.9
+      },
+      "inventory_quantity": 44,
+      "is_featured": false,
+      "tags": [
+        "lighting",
+        "floor",
+        "marble",
+        "gold"
+      ],
+      "weight": 15.1,
+      "sku": "ULM-LIG-9756"
+    },
+    {
+      "name": "Metal Table Lamp - Blue",
+      "slug": "metal-table-lamp--blue",
+      "description": "Classic table lamp perfect for bedside tables, desks, or accent lighting.",
+      "short_description": "Metal table lamp in blue",
+      "price": 220,
+      "compare_price": 327,
+      "category": "lighting",
+      "subcategory": "table",
+      "brand": "Ulmo",
+      "images": [
+        "https://images.pexels.com/photos/1000000/pexels-photo-1000000.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+        "https://images.pexels.com/photos/1000001/pexels-photo-1000001.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+        "https://images.pexels.com/photos/1000002/pexels-photo-1000002.jpeg?auto=compress&cs=tinysrgb&h=650&w=940"
+      ],
+      "variants": {
+        "colors": [
+          "white",
+          "black",
+          "brass"
+        ],
+        "materials": [
+          "ceramic",
+          "metal"
+        ]
+      },
+      "dimensions": {
+        "length": 29.4,
+        "width": 34.8,
+        "height": 56.5
+      },
+      "inventory_quantity": 8,
+      "is_featured": false,
+      "tags": [
+        "lighting",
+        "table",
+        "metal",
+        "blue"
+      ],
+      "weight": 10.1,
+      "sku": "ULM-LIG-5036"
+    },
+    {
+      "name": "Metal Table Lamp - White",
+      "slug": "metal-table-lamp--white",
+      "description": "Classic table lamp perfect for bedside tables, desks, or accent lighting.",
+      "short_description": "Metal table lamp in white",
+      "price": 115,
+      "compare_price": 152,
+      "category": "lighting",
+      "subcategory": "table",
+      "brand": "Ulmo",
+      "images": [
+        "https://images.pexels.com/photos/1000000/pexels-photo-1000000.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+        "https://images.pexels.com/photos/1000001/pexels-photo-1000001.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+        "https://images.pexels.com/photos/1000002/pexels-photo-1000002.jpeg?auto=compress&cs=tinysrgb&h=650&w=940"
+      ],
+      "variants": {
+        "colors": [
+          "white",
+          "black",
+          "brass"
+        ],
+        "materials": [
+          "ceramic",
+          "metal"
+        ]
+      },
+      "dimensions": {
+        "length": 33.8,
+        "width": 20.6,
+        "height": 55.0
+      },
+      "inventory_quantity": 43,
+      "is_featured": false,
+      "tags": [
+        "lighting",
+        "table",
+        "metal",
+        "white"
+      ],
+      "weight": 6.0,
+      "sku": "ULM-LIG-4490"
+    },
+    {
+      "name": "Metal Table Lamp - White",
+      "slug": "metal-table-lamp--white",
+      "description": "Classic table lamp perfect for bedside tables, desks, or accent lighting.",
+      "short_description": "Metal table lamp in white",
+      "price": 166,
+      "compare_price": 247,
+      "category": "lighting",
+      "subcategory": "table",
+      "brand": "Ulmo",
+      "images": [
+        "https://images.pexels.com/photos/1000000/pexels-photo-1000000.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+        "https://images.pexels.com/photos/1000001/pexels-photo-1000001.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+        "https://images.pexels.com/photos/1000002/pexels-photo-1000002.jpeg?auto=compress&cs=tinysrgb&h=650&w=940"
+      ],
+      "variants": {
+        "colors": [
+          "white",
+          "black",
+          "brass"
+        ],
+        "materials": [
+          "ceramic",
+          "metal"
+        ]
+      },
+      "dimensions": {
+        "length": 25.1,
+        "width": 21.9,
+        "height": 56.3
+      },
+      "inventory_quantity": 31,
+      "is_featured": true,
+      "tags": [
+        "lighting",
+        "table",
+        "metal",
+        "white"
+      ],
+      "weight": 14.8,
+      "sku": "ULM-LIG-9822"
+    },
+    {
+      "name": "Wood Modern Pendant Light - White",
+      "slug": "wood-modern-pendant-light--white",
+      "description": "Stylish pendant light that provides focused illumination and serves as a design statement.",
+      "short_description": "Wood modern pendant light in white",
+      "price": 386,
+      "compare_price": 501,
+      "category": "lighting",
+      "subcategory": "pendant",
+      "brand": "Ulmo",
+      "images": [
+        "https://images.pexels.com/photos/1000000/pexels-photo-1000000.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+        "https://images.pexels.com/photos/1000001/pexels-photo-1000001.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+        "https://images.pexels.com/photos/1000002/pexels-photo-1000002.jpeg?auto=compress&cs=tinysrgb&h=650&w=940"
+      ],
+      "variants": {
+        "colors": [
+          "black",
+          "brass",
+          "white"
+        ],
+        "materials": [
+          "metal",
+          "glass"
+        ]
+      },
+      "dimensions": {
+        "length": 29.6,
+        "width": 26.1,
+        "height": 49.5
+      },
+      "inventory_quantity": 20,
+      "is_featured": false,
+      "tags": [
+        "lighting",
+        "pendant",
+        "wood",
+        "white"
+      ],
+      "weight": 3.7,
+      "sku": "ULM-LIG-3666"
+    },
+    {
+      "name": "Glass Modern Pendant Light - Black",
+      "slug": "glass-modern-pendant-light--black",
+      "description": "Stylish pendant light that provides focused illumination and serves as a design statement.",
+      "short_description": "Glass modern pendant light in black",
+      "price": 388,
+      "compare_price": 563,
+      "category": "lighting",
+      "subcategory": "pendant",
+      "brand": "Ulmo",
+      "images": [
+        "https://images.pexels.com/photos/1000000/pexels-photo-1000000.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+        "https://images.pexels.com/photos/1000001/pexels-photo-1000001.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+        "https://images.pexels.com/photos/1000002/pexels-photo-1000002.jpeg?auto=compress&cs=tinysrgb&h=650&w=940"
+      ],
+      "variants": {
+        "colors": [
+          "black",
+          "brass",
+          "white"
+        ],
+        "materials": [
+          "metal",
+          "glass"
+        ]
+      },
+      "dimensions": {
+        "length": 29.2,
+        "width": 37.6,
+        "height": 55.8
+      },
+      "inventory_quantity": 20,
+      "is_featured": false,
+      "tags": [
+        "lighting",
+        "pendant",
+        "glass",
+        "black"
+      ],
+      "weight": 17.4,
+      "sku": "ULM-LIG-7217"
+    },
+    {
+      "name": "Wood Modern Pendant Light - Black",
+      "slug": "wood-modern-pendant-light--black",
+      "description": "Stylish pendant light that provides focused illumination and serves as a design statement.",
+      "short_description": "Wood modern pendant light in black",
+      "price": 339,
+      "compare_price": 445,
+      "category": "lighting",
+      "subcategory": "pendant",
+      "brand": "Ulmo",
+      "images": [
+        "https://images.pexels.com/photos/1000000/pexels-photo-1000000.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+        "https://images.pexels.com/photos/1000001/pexels-photo-1000001.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+        "https://images.pexels.com/photos/1000002/pexels-photo-1000002.jpeg?auto=compress&cs=tinysrgb&h=650&w=940"
+      ],
+      "variants": {
+        "colors": [
+          "black",
+          "brass",
+          "white"
+        ],
+        "materials": [
+          "metal",
+          "glass"
+        ]
+      },
+      "dimensions": {
+        "length": 29.9,
+        "width": 21.5,
+        "height": 45.3
+      },
+      "inventory_quantity": 27,
+      "is_featured": true,
+      "tags": [
+        "lighting",
+        "pendant",
+        "wood",
+        "black"
+      ],
+      "weight": 23.7,
+      "sku": "ULM-LIG-5235"
+    },
+    {
+      "name": "Silk Throw Pillow Set - Pattern",
+      "slug": "silk-throw-pillow-set--pattern",
+      "description": "Set of decorative throw pillows that add comfort and style to any seating area.",
+      "short_description": "Silk throw pillow set in pattern",
+      "price": 67,
+      "compare_price": 82,
+      "category": "textiles",
+      "subcategory": "cushions",
+      "brand": "Ulmo",
+      "images": [
+        "https://images.pexels.com/photos/1000000/pexels-photo-1000000.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+        "https://images.pexels.com/photos/1000001/pexels-photo-1000001.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+        "https://images.pexels.com/photos/1000002/pexels-photo-1000002.jpeg?auto=compress&cs=tinysrgb&h=650&w=940"
+      ],
+      "variants": {
+        "colors": [
+          "neutral",
+          "colorful",
+          "pattern"
+        ],
+        "materials": [
+          "cotton",
+          "linen"
+        ]
+      },
+      "dimensions": {
+        "length": 57.2,
+        "width": 50.3,
+        "height": 16.9
+      },
+      "inventory_quantity": 17,
+      "is_featured": true,
+      "tags": [
+        "textiles",
+        "cushions",
+        "silk",
+        "pattern"
+      ],
+      "weight": 24.1,
+      "sku": "ULM-TEX-1124"
+    },
+    {
+      "name": "Linen Throw Pillow Set - Neutral",
+      "slug": "linen-throw-pillow-set--neutral",
+      "description": "Set of decorative throw pillows that add comfort and style to any seating area.",
+      "short_description": "Linen throw pillow set in neutral",
+      "price": 50,
+      "compare_price": 70,
+      "category": "textiles",
+      "subcategory": "cushions",
+      "brand": "Ulmo",
+      "images": [
+        "https://images.pexels.com/photos/1000000/pexels-photo-1000000.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+        "https://images.pexels.com/photos/1000001/pexels-photo-1000001.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+        "https://images.pexels.com/photos/1000002/pexels-photo-1000002.jpeg?auto=compress&cs=tinysrgb&h=650&w=940"
+      ],
+      "variants": {
+        "colors": [
+          "neutral",
+          "colorful",
+          "pattern"
+        ],
+        "materials": [
+          "cotton",
+          "linen"
+        ]
+      },
+      "dimensions": {
+        "length": 50.1,
+        "width": 57.1,
+        "height": 10.9
+      },
+      "inventory_quantity": 30,
+      "is_featured": false,
+      "tags": [
+        "textiles",
+        "cushions",
+        "linen",
+        "neutral"
+      ],
+      "weight": 22.5,
+      "sku": "ULM-TEX-3030"
+    },
+    {
+      "name": "Acrylic Knit Throw Blanket - Gray",
+      "slug": "acrylic-knit-throw-blanket--gray",
+      "description": "Cozy knit throw blanket perfect for snuggling on the couch or adding texture to your decor.",
+      "short_description": "Acrylic knit throw blanket in gray",
+      "price": 147,
+      "compare_price": 205,
+      "category": "textiles",
+      "subcategory": "throws",
+      "brand": "Ulmo",
+      "images": [
+        "https://images.pexels.com/photos/1000000/pexels-photo-1000000.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+        "https://images.pexels.com/photos/1000001/pexels-photo-1000001.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+        "https://images.pexels.com/photos/1000002/pexels-photo-1000002.jpeg?auto=compress&cs=tinysrgb&h=650&w=940"
+      ],
+      "variants": {
+        "colors": [
+          "cream",
+          "gray",
+          "navy"
+        ],
+        "materials": [
+          "wool",
+          "cotton"
+        ]
+      },
+      "dimensions": {
+        "length": 91.7,
+        "width": 46.5,
+        "height": 57.1
+      },
+      "inventory_quantity": 6,
+      "is_featured": false,
+      "tags": [
+        "textiles",
+        "throws",
+        "acrylic",
+        "gray"
+      ],
+      "weight": 20.2,
+      "sku": "ULM-TEX-2851"
+    },
+    {
+      "name": "Cashmere Knit Throw Blanket - Burgundy",
+      "slug": "cashmere-knit-throw-blanket--burgundy",
+      "description": "Cozy knit throw blanket perfect for snuggling on the couch or adding texture to your decor.",
+      "short_description": "Cashmere knit throw blanket in burgundy",
+      "price": 119,
+      "compare_price": 156,
+      "category": "textiles",
+      "subcategory": "throws",
+      "brand": "Ulmo",
+      "images": [
+        "https://images.pexels.com/photos/1000000/pexels-photo-1000000.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+        "https://images.pexels.com/photos/1000001/pexels-photo-1000001.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+        "https://images.pexels.com/photos/1000002/pexels-photo-1000002.jpeg?auto=compress&cs=tinysrgb&h=650&w=940"
+      ],
+      "variants": {
+        "colors": [
+          "cream",
+          "gray",
+          "navy"
+        ],
+        "materials": [
+          "wool",
+          "cotton"
+        ]
+      },
+      "dimensions": {
+        "length": 33.0,
+        "width": 23.6,
+        "height": 88.6
+      },
+      "inventory_quantity": 50,
+      "is_featured": false,
+      "tags": [
+        "textiles",
+        "throws",
+        "cashmere",
+        "burgundy"
+      ],
+      "weight": 20.5,
+      "sku": "ULM-TEX-3977"
+    },
+    {
+      "name": "Cotton Knit Throw Blanket - Burgundy",
+      "slug": "cotton-knit-throw-blanket--burgundy",
+      "description": "Cozy knit throw blanket perfect for snuggling on the couch or adding texture to your decor.",
+      "short_description": "Cotton knit throw blanket in burgundy",
+      "price": 130,
+      "compare_price": 180,
+      "category": "textiles",
+      "subcategory": "throws",
+      "brand": "Ulmo",
+      "images": [
+        "https://images.pexels.com/photos/1000000/pexels-photo-1000000.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+        "https://images.pexels.com/photos/1000001/pexels-photo-1000001.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+        "https://images.pexels.com/photos/1000002/pexels-photo-1000002.jpeg?auto=compress&cs=tinysrgb&h=650&w=940"
+      ],
+      "variants": {
+        "colors": [
+          "cream",
+          "gray",
+          "navy"
+        ],
+        "materials": [
+          "wool",
+          "cotton"
+        ]
+      },
+      "dimensions": {
+        "length": 95.2,
+        "width": 45.7,
+        "height": 41.9
+      },
+      "inventory_quantity": 14,
+      "is_featured": false,
+      "tags": [
+        "textiles",
+        "throws",
+        "cotton",
+        "burgundy"
+      ],
+      "weight": 16.7,
+      "sku": "ULM-TEX-7300"
+    },
+    {
+      "name": "Jute Area Rug - Neutral",
+      "slug": "jute-area-rug--neutral",
+      "description": "Beautiful area rug that defines spaces and adds warmth to any room.",
+      "short_description": "Jute area rug in neutral",
+      "price": 230,
+      "compare_price": 340,
+      "category": "textiles",
+      "subcategory": "rugs",
+      "brand": "Ulmo",
+      "images": [
+        "https://images.pexels.com/photos/1000000/pexels-photo-1000000.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+        "https://images.pexels.com/photos/1000001/pexels-photo-1000001.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+        "https://images.pexels.com/photos/1000002/pexels-photo-1000002.jpeg?auto=compress&cs=tinysrgb&h=650&w=940"
+      ],
+      "variants": {
+        "colors": [
+          "neutral",
+          "pattern",
+          "colorful"
+        ],
+        "materials": [
+          "wool",
+          "cotton"
+        ]
+      },
+      "dimensions": {
+        "length": 226.3,
+        "width": 109.6,
+        "height": 2.2
+      },
+      "inventory_quantity": 26,
+      "is_featured": true,
+      "tags": [
+        "textiles",
+        "rugs",
+        "jute",
+        "neutral"
+      ],
+      "weight": 3.0,
+      "sku": "ULM-TEX-4620"
+    },
+    {
+      "name": "Linen Throw Pillow Set - Solid",
+      "slug": "linen-throw-pillow-set--solid",
+      "description": "Set of decorative throw pillows that add comfort and style to any seating area.",
+      "short_description": "Linen throw pillow set in solid",
+      "price": 58,
+      "compare_price": 72,
+      "category": "textiles",
+      "subcategory": "cushions",
+      "brand": "Ulmo",
+      "images": [
+        "https://images.pexels.com/photos/1000000/pexels-photo-1000000.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+        "https://images.pexels.com/photos/1000001/pexels-photo-1000001.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+        "https://images.pexels.com/photos/1000002/pexels-photo-1000002.jpeg?auto=compress&cs=tinysrgb&h=650&w=940"
+      ],
+      "variants": {
+        "colors": [
+          "neutral",
+          "colorful",
+          "pattern"
+        ],
+        "materials": [
+          "cotton",
+          "linen"
+        ]
+      },
+      "dimensions": {
+        "length": 43.4,
+        "width": 54.0,
+        "height": 13.6
+      },
+      "inventory_quantity": 40,
+      "is_featured": false,
+      "tags": [
+        "textiles",
+        "cushions",
+        "linen",
+        "solid"
+      ],
+      "weight": 5.9,
+      "sku": "ULM-TEX-2819"
+    },
+    {
+      "name": "Cotton Throw Pillow Set - Neutral",
+      "slug": "cotton-throw-pillow-set--neutral",
+      "description": "Set of decorative throw pillows that add comfort and style to any seating area.",
+      "short_description": "Cotton throw pillow set in neutral",
+      "price": 94,
+      "compare_price": 124,
+      "category": "textiles",
+      "subcategory": "cushions",
+      "brand": "Ulmo",
+      "images": [
+        "https://images.pexels.com/photos/1000000/pexels-photo-1000000.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+        "https://images.pexels.com/photos/1000001/pexels-photo-1000001.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+        "https://images.pexels.com/photos/1000002/pexels-photo-1000002.jpeg?auto=compress&cs=tinysrgb&h=650&w=940"
+      ],
+      "variants": {
+        "colors": [
+          "neutral",
+          "colorful",
+          "pattern"
+        ],
+        "materials": [
+          "cotton",
+          "linen"
+        ]
+      },
+      "dimensions": {
+        "length": 49.8,
+        "width": 46.1,
+        "height": 15.0
+      },
+      "inventory_quantity": 34,
+      "is_featured": false,
+      "tags": [
+        "textiles",
+        "cushions",
+        "cotton",
+        "neutral"
+      ],
+      "weight": 3.1,
+      "sku": "ULM-TEX-8545"
+    }
+  ],
+  "total_products": 32,
+  "generated_at": "2025-09-08 05:19:44"
+}
