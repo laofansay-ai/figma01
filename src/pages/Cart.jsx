@@ -214,24 +214,11 @@ const Cart = () => {
 
       {/* Checkout Button */}
       <div className="fixed bottom-20 left-0 right-0 px-4 py-4 bg-white border-t border-gray-100">
-        {isAuthenticated ? (
-          <Link to="/checkout">
-            <Button className="w-full bg-yellow-500 hover:bg-yellow-600 text-white py-4 rounded-2xl font-semibold text-lg">
-              Proceed to Checkout - ${finalTotal.toFixed(2)}
-            </Button>
-          </Link>
-        ) : (
-          <div className="space-y-3">
-            <p className="text-center text-sm text-gray-600">
-              Please sign in to proceed with checkout
-            </p>
-            <Link to="/account">
-              <Button className="w-full bg-yellow-500 hover:bg-yellow-600 text-white py-4 rounded-2xl font-semibold text-lg">
-                Sign In to Checkout - ${finalTotal.toFixed(2)}
-              </Button>
-            </Link>
-          </div>
-        )}
+        <Link to="/checkout">
+          <Button className="w-full bg-yellow-500 hover:bg-yellow-600 text-white py-4 rounded-2xl font-semibold text-lg">
+            Proceed to Checkout - ${finalTotal.toFixed(2)}
+          </Button>
+        </Link>
       </div>
     </div>
   )
