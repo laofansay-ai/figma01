@@ -47,10 +47,10 @@ export const CartProvider = ({ children }) => {
     }
   }
 
-  const addToCart = async (product, quantity = 1, variantOptions = {}) => {
+  const addToCart = async (productId, quantity = 1, variantOptions = {}) => {
     try {
       const { error } = await cartService.addToCart(
-        product.id,
+        productId,  // 传递 productId 而不是 product.id
         quantity,
         variantOptions,
         user?.id

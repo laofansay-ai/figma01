@@ -1,22 +1,46 @@
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { CartProvider } from './context/CartContext'
+import { UserProvider } from './context/UserContext'
+import Home from './pages/Home'
+import Categories from './pages/Categories'
+import ProductList from './pages/ProductList'
+import ProductDetail from './pages/ProductDetail'
+import Cart from './pages/Cart'
+import Checkout from './pages/Checkout'
+import Orders from './pages/Orders'
+import Wishlist from './pages/Wishlist'
+import Account from './pages/Account'
+import AuthTestPage from './components/auth/AuthTestPage'
+import CartTestPage from './pages/CartTestPage'
+import Navigation from './components/common/Navigation'
 import './App.css'
 
 function App() {
-  return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold text-gray-900 mb-4">ULMO</h1>
-        <p className="text-xl text-gray-600 mb-8">Modern E-Commerce Platform</p>
-        <div className="bg-white rounded-lg shadow-lg p-8 max-w-md">
-          <h2 className="text-2xl font-semibold mb-4">Welcome to Ulmo</h2>
-          <p className="text-gray-600 mb-6">Your modern furniture and decor destination</p>
-          <button className="bg-yellow-500 text-white px-6 py-3 rounded-lg hover:bg-yellow-600 transition-colors">
-            Get Started
-          </button>
-        </div>
-      </div>
-    </div>
-  )
+	return (
+		<Router>
+			<UserProvider>
+				<CartProvider>
+					<div className="min-h-screen bg-white">
+						<Routes>
+							<Route path="/" element={<Home />} />
+							<Route path="/categories" element={<Categories />} />
+							<Route path="/categories/:category" element={<ProductList />} />
+							<Route path="/products" element={<ProductList />} />
+							<Route path="/products/:id" element={<ProductDetail />} />
+							<Route path="/cart" element={<Cart />} />
+							<Route path="/checkout" element={<Checkout />} />
+							<Route path="/orders" element={<Orders />} />
+							<Route path="/wishlist" element={<Wishlist />} />
+							<Route path="/account" element={<Account />} />
+							<Route path="/auth-test" element={<AuthTestPage />} />
+							<Route path="/cart-test" element={<CartTestPage />} />
+						</Routes>
+						<Navigation />
+					</div>
+				</CartProvider>
+			</UserProvider>
+		</Router>
+	)
 }
 
 export default App
-

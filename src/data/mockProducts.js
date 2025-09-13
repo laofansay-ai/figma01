@@ -296,7 +296,11 @@ export const mockProducts = [
 
 // Helper functions
 export const getProductById = (id) => {
-  return mockProducts.find(product => product.id === parseInt(id))
+  return mockProducts.find(product => product.id == id)
+}
+
+export const getProductBySlug = (slug) => {
+  return mockProducts.find(product => product.slug === slug)
 }
 
 export const getProductsByCategory = (categorySlug) => {

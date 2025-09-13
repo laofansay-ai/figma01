@@ -1,5 +1,5 @@
 import { supabase } from '../lib/supabase'
-import { productService } from './productService'
+import { getProductById } from '../data/mockProducts'
 
 class CartService {
   constructor() {
@@ -159,20 +159,25 @@ class CartService {
       
       // Enrich with product data
       const enrichedItems = items.map(item => {
-        const product = productService.getProductById ? 
-          productService.getProductById(item.productId) : 
-          { data: null }
+        // 直接使用 getProductById 获取产品数据
+        const product = getProductById(item.productId)
         
         return {
           id: item.id,
           productId: item.productId,
           quantity: item.quantity,
           variantOptions: item.variantOptions || {},
-          product: product.data,
-          unitPrice: product.data?.price || 0,
-          totalPrice: (product.data?.price || 0) * item.quantity
+          product: product,
+          unitPrice: product?.price || 0,
+          totalPrice: (product?.price || 0) * item.quantity
         }
       }).filter(item => item.product) // Remove items with missing products
+
+      console.log('getLocalCartItems result:', {
+        rawItems: items,
+        enrichedItems,
+        storageKey: this.storageKey
+      })
 
       return { data: enrichedItems, error: null }
     } catch (error) {

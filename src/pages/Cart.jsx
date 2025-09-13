@@ -1,22 +1,22 @@
 import { Link } from 'react-router-dom'
 import { ArrowLeft, Plus, Minus, Trash2, ShoppingBag } from 'lucide-react'
 import { useCart } from '../context/CartContext'
+import { useAuth } from '../hooks/useAuth'
 import { Button } from '@/components/ui/button'
 
 const Cart = () => {
-  const { items, updateQuantity, removeItem, getTotalPrice, clearCart } = useCart()
+  const { items, updateQuantity, removeFromCart, summary, clearCart } = useCart()
+  const { isAuthenticated } = useAuth()
 
   const handleQuantityChange = (productId, newQuantity) => {
     if (newQuantity === 0) {
-      removeItem(productId)
+      removeFromCart(productId)
     } else {
       updateQuantity(productId, newQuantity)
     }
   }
 
-  const deliveryFee = 15
-  const totalPrice = getTotalPrice()
-  const finalTotal = totalPrice + (totalPrice > 0 ? deliveryFee : 0)
+  const finalTotal = summary.total
 
   if (items.length === 0) {
     return (
@@ -73,13 +73,13 @@ const Cart = () => {
       <div className="px-4 py-6">
         <div className="space-y-4 mb-6">
           {items.map((item) => (
-            <div key={`${item.id}-${item.selectedColor}-${item.selectedSize}`} className="bg-white border border-gray-100 rounded-2xl p-4 shadow-sm">
+            <div key={`${item.id}-${item.variantOptions?.color}-${item.variantOptions?.size}`} className="bg-white border border-gray-100 rounded-2xl p-4 shadow-sm">
               <div className="flex items-start space-x-4">
                 {/* Product Image */}
                 <div className="w-20 h-20 bg-gray-100 rounded-xl overflow-hidden flex-shrink-0">
                   <img
-                    src={item.image || '/api/placeholder/80/80'}
-                    alt={item.name}
+                    src={item.product?.images?.[0] || item.image || '/api/placeholder/80/80'}
+                    alt={item.product?.name || item.name}
                     className="w-full h-full object-cover"
                   />
                 </div>
@@ -87,23 +87,23 @@ const Cart = () => {
                 {/* Product Info */}
                 <div className="flex-1 min-w-0">
                   <h3 className="font-semibold text-gray-900 mb-1 line-clamp-2">
-                    {item.name}
+                    {item.product?.name || item.name}
                   </h3>
                   <div className="flex items-center space-x-2 mb-2">
-                    {item.selectedColor && (
+                    {item.variantOptions?.color && (
                       <span className="text-xs text-gray-500">
-                        Color: {item.selectedColor}
+                        Color: {item.variantOptions.color}
                       </span>
                     )}
-                    {item.selectedSize && (
+                    {item.variantOptions?.size && (
                       <span className="text-xs text-gray-500">
-                        Size: {item.selectedSize}
+                        Size: {item.variantOptions.size}
                       </span>
                     )}
                   </div>
                   <div className="flex items-center justify-between">
                     <span className="text-lg font-bold text-yellow-500">
-                      ${item.price}
+                      ${item.product?.price || item.price}
                     </span>
                     <div className="flex items-center space-x-3">
                       {/* Quantity Controls */}
@@ -127,7 +127,7 @@ const Cart = () => {
                       
                       {/* Remove Button */}
                       <button
-                        onClick={() => removeItem(item.id)}
+                        onClick={() => removeFromCart(item.id)}
                         className="p-2 text-red-500 hover:bg-red-50 rounded-lg"
                       >
                         <Trash2 size={16} />
@@ -159,18 +159,24 @@ const Cart = () => {
           <h3 className="font-semibold text-gray-900 mb-4">Order Summary</h3>
           <div className="space-y-3">
             <div className="flex justify-between">
-              <span className="text-gray-600">Subtotal ({items.length} items)</span>
-              <span className="font-medium">${totalPrice.toFixed(2)}</span>
+              <span className="text-gray-600">Subtotal ({summary.itemCount} items)</span>
+              <span className="font-medium">${summary.subtotal.toFixed(2)}</span>
             </div>
             <div className="flex justify-between">
-              <span className="text-gray-600">Delivery Fee</span>
-              <span className="font-medium">${deliveryFee.toFixed(2)}</span>
+              <span className="text-gray-600">Tax</span>
+              <span className="font-medium">${summary.tax.toFixed(2)}</span>
+            </div>
+            <div className="flex justify-between">
+              <span className="text-gray-600">Shipping</span>
+              <span className="font-medium">
+                {summary.shipping === 0 ? 'Free' : `$${summary.shipping.toFixed(2)}`}
+              </span>
             </div>
             <div className="border-t border-gray-200 pt-3">
               <div className="flex justify-between">
                 <span className="text-lg font-bold text-gray-900">Total</span>
                 <span className="text-lg font-bold text-yellow-500">
-                  ${finalTotal.toFixed(2)}
+                  ${summary.total.toFixed(2)}
                 </span>
               </div>
             </div>
@@ -208,9 +214,24 @@ const Cart = () => {
 
       {/* Checkout Button */}
       <div className="fixed bottom-20 left-0 right-0 px-4 py-4 bg-white border-t border-gray-100">
-        <Button className="w-full bg-yellow-500 hover:bg-yellow-600 text-white py-4 rounded-2xl font-semibold text-lg">
-          Proceed to Checkout - ${finalTotal.toFixed(2)}
-        </Button>
+        {isAuthenticated ? (
+          <Link to="/checkout">
+            <Button className="w-full bg-yellow-500 hover:bg-yellow-600 text-white py-4 rounded-2xl font-semibold text-lg">
+              Proceed to Checkout - ${finalTotal.toFixed(2)}
+            </Button>
+          </Link>
+        ) : (
+          <div className="space-y-3">
+            <p className="text-center text-sm text-gray-600">
+              Please sign in to proceed with checkout
+            </p>
+            <Link to="/account">
+              <Button className="w-full bg-yellow-500 hover:bg-yellow-600 text-white py-4 rounded-2xl font-semibold text-lg">
+                Sign In to Checkout - ${finalTotal.toFixed(2)}
+              </Button>
+            </Link>
+          </div>
+        )}
       </div>
     </div>
   )
