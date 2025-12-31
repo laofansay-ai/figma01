@@ -38,8 +38,16 @@ export const CartProvider = ({ children }) => {
   const loadCartItems = async () => {
     setLoading(true)
     try {
-      const { data } = await cartService.getCartItems(user?.id)
-      setItems(data || [])
+      console.log('Loading cart items for user:', user?.id)
+      const { data, error } = await cartService.getCartItems(user?.id)
+      console.log('Cart items loaded:', data, 'Error:', error)
+      
+      if (error) {
+        console.error('Error loading cart items:', error)
+      } else {
+        setItems(data || [])
+        console.log('Cart items set to state:', data)
+      }
     } catch (error) {
       console.error('Error loading cart items:', error)
     } finally {

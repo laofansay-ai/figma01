@@ -70,13 +70,7 @@ const ProductList = () => {
   }, [category, currentPage, sortBy, searchQuery])
 
   const handleAddToCart = (product) => {
-    addToCart({
-      id: product.id,
-      name: product.name,
-      price: product.price,
-      image: product.images?.[0] || '/api/placeholder/300/300',
-      quantity: 1
-    })
+    addToCart(product.id, 1, {}) // 使用产品ID而不是对象
   }
 
   const formatPrice = (price) => {

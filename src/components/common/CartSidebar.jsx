@@ -133,8 +133,23 @@ const CartSidebar = ({ isOpen, onClose }) => {
 						<>
 							{/* Cart Items */}
 							<div className="flex-1 overflow-y-auto p-6 space-y-4 pb-4">
-								{items.map((item) => (
-									<div
+								{items.map((item) => {
+									// 调试信息 - 在控制台输出商品数据
+									console.log('CartSidebar - Item data:', {
+										id: item.id,
+										productId: item.productId,
+										product: item.product,
+										products: item.products,
+										image: item.image,
+										price: item.price,
+										unitPrice: item.unitPrice,
+										unit_price: item.unit_price,
+										hasProductImages: !!(item.product?.images || item.products?.images),
+										imageSrc: item.product?.images?.[0] || item.products?.images?.[0] || item.image
+									});
+									
+									return (
+										<div
 										key={item.id}
 										className={`
                       bg-white border border-gray-200 rounded-xl p-4 transition-all duration-300
@@ -149,28 +164,37 @@ const CartSidebar = ({ isOpen, onClose }) => {
 											{/* Product Image */}
 											<div className="w-20 h-20 bg-gray-100 rounded-lg overflow-hidden flex-shrink-0">
 												<img
-													src={item.product?.images?.[0] || item.image || '/api/placeholder/80/80'}
-													alt={item.product?.name || item.name}
+													src={
+														item.product?.images?.[0] || 
+														item.products?.images?.[0] || 
+														item.image || 
+														'/api/placeholder/80/80'
+													}
+													alt={item.product?.name || item.products?.name || item.name || '商品'}
 													className="w-full h-full object-cover"
+													onError={(e) => {
+														console.error('商品图片加载失败:', e.target.src)
+														e.target.src = '/api/placeholder/80/80'
+													}}
 												/>
 											</div>
 
 											{/* Product Info */}
 											<div className="flex-1 min-w-0">
 												<Link
-													to={`/products/${item.product?.slug || item.slug || item.productId}`}
+													to={`/products/${item.product?.slug || item.products?.slug || item.slug || item.productId || item.product_id}`}
 													onClick={onClose}
 													className="text-sm font-semibold text-gray-900 hover:text-yellow-600 transition-colors line-clamp-2"
 												>
-													{item.product?.name || item.name}
+													{item.product?.name || item.products?.name || item.name || '未知商品'}
 												</Link>
 
-												{item.variantOptions && (
+												{(item.variantOptions || item.variant_options) && (
 													<p className="text-xs text-gray-500 mt-1">
-														{item.variantOptions.color &&
-															`Color: ${item.variantOptions.color}`}
-														{item.variantOptions.size &&
-															` • Size: ${item.variantOptions.size}`}
+														{(item.variantOptions || item.variant_options)?.color &&
+															`Color: ${(item.variantOptions || item.variant_options).color}`}
+														{(item.variantOptions || item.variant_options)?.size &&
+															` • Size: ${(item.variantOptions || item.variant_options).size}`}
 													</p>
 												)}
 
@@ -204,11 +228,25 @@ const CartSidebar = ({ isOpen, onClose }) => {
 													{/* Price */}
 													<div className="text-right">
 														<p className="text-sm font-bold text-gray-900">
-															{formatPrice((item.product?.price || item.price || 0) * item.quantity)}
+															{formatPrice((
+																item.product?.price || 
+																item.products?.price || 
+																item.unitPrice || 
+																item.unit_price || 
+																item.price || 
+																0
+															) * item.quantity)}
 														</p>
 														{item.quantity > 1 && (
 															<p className="text-xs text-gray-500">
-																{formatPrice(item.product?.price || item.price || 0)} each
+																{formatPrice(
+																	item.product?.price || 
+																	item.products?.price || 
+																	item.unitPrice || 
+																	item.unit_price || 
+																	item.price || 
+																	0
+																)} each
 															</p>
 														)}
 													</div>
@@ -228,7 +266,8 @@ const CartSidebar = ({ isOpen, onClose }) => {
 											</button>
 										</div>
 									</div>
-								))}
+								)
+							})}
 							</div>
 
 							{/* Cart Summary */}

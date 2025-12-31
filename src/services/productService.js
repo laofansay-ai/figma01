@@ -11,7 +11,7 @@ import {
 
 class ProductService {
 	constructor() {
-		this.useMockData = true // Set to false when Supabase is configured
+	this.useMockData = false // 使用真实的 Supabase 数据库
 	}
 
 	// Categories
@@ -39,13 +39,13 @@ class ProductService {
 			return { data: getCategoryBySlug(slug), error: null }
 		}
 
-		try {
+			try {
 			const { data, error } = await supabase
 				.from('categories')
 				.select('*')
 				.eq('slug', slug)
 				.eq('is_active', true)
-				.single()
+				.maybeSingle()  // 使用 maybeSingle() 避免 PGRST116 错误
 
 			return { data, error }
 		} catch (error) {
@@ -232,7 +232,7 @@ class ProductService {
 				)
 				.eq('id', id)
 				.eq('is_active', true)
-				.single()
+				.maybeSingle()  // 使用 maybeSingle() 避免 PGRST116 错误
 
 			return { data, error }
 		} catch (error) {
@@ -262,7 +262,7 @@ class ProductService {
 				)
 				.eq('slug', slug)
 				.eq('is_active', true)
-				.single()
+				.maybeSingle()  // 使用 maybeSingle() 避免 PGRST116 错误
 
 			return { data, error }
 		} catch (error) {
@@ -277,11 +277,11 @@ class ProductService {
 			return { data: featured, error: null }
 		}
 
-		try {
-			const { data, error } = await supabase
-				.from('products')
-				.select(
-					`
+			try {
+				const { data, error } = await supabase
+					.from('products')
+					.select(
+						`
           *,
           categories (
             id,
@@ -289,11 +289,11 @@ class ProductService {
             slug
           )
         `
-				)
-				.eq('is_active', true)
-				.eq('is_featured', true)
-				.order('created_at', { ascending: false })
-				.limit(limit)
+					)
+					.eq('is_active', true)
+					.eq('is_featured', true)
+					.order('created_at', { ascending: false })
+					.limit(limit)
 
 			return { data, error }
 		} catch (error) {
@@ -460,11 +460,15 @@ class ProductService {
 
 		try {
 			// First get the current product's category
-			const { data: currentProduct } = await supabase
+			const { data: currentProduct, error: currentError } = await supabase
 				.from('products')
 				.select('category_id')
 				.eq('id', productId)
-				.single()
+				.maybeSingle()  // 使用 maybeSingle() 避免 PGRST116 错误
+
+			if (currentError) {
+				throw currentError
+			}
 
 			if (!currentProduct) {
 				return { data: [], error: null }
@@ -513,11 +517,19 @@ class ProductService {
 
 		try {
 			// Get current product tags
-			const { data: currentProduct } = await supabase
+			const { data: currentProduct, error: currentError } = await supabase
 				.from('products')
 				.select('tags')
 				.eq('id', productId)
 				.single()
+
+			// Handle case where product not found
+			if (currentError && currentError.code === 'PGRST116') {
+				return { data: [], error: null }
+			}
+			if (currentError) {
+				throw currentError
+			}
 
 			if (!currentProduct || !currentProduct.tags) {
 				return { data: [], error: null }
@@ -558,11 +570,11 @@ class ProductService {
 			return { data: popular, error: null }
 		}
 
-		try {
-			const { data, error } = await supabase
-				.from('products')
-				.select(
-					`
+			try {
+				const { data, error } = await supabase
+					.from('products')
+					.select(
+						`
           *,
           categories (
             id,
@@ -570,11 +582,11 @@ class ProductService {
             slug
           )
         `
-				)
-				.eq('is_active', true)
-				.order('rating', { ascending: false })
-				.order('review_count', { ascending: false })
-				.limit(limit)
+					)
+					.eq('is_active', true)
+					.order('average_rating', { ascending: false })
+					.order('review_count', { ascending: false })
+					.limit(limit)
 
 			return { data, error }
 		} catch (error) {

@@ -47,13 +47,7 @@ const Home = () => {
 	}, [])
 
 	const handleAddToCart = (product) => {
-		addToCart({
-			id: product.id,
-			name: product.name,
-			price: product.price,
-			image: product.images?.[0] || '/api/placeholder/300/300',
-			quantity: 1
-		})
+		addToCart(product.id, 1, {}) // 使用产品ID而不是对象
 	}
 
 	const formatPrice = (price) => {
@@ -167,9 +161,9 @@ const Home = () => {
 									alt={product.name}
 									className="w-full h-40 object-cover"
 								/>
-								{product.comparePrice && (
+								{product.compare_price && (
 									<div className="absolute top-2 left-2 bg-red-500 text-white text-xs px-2 py-1 rounded-full">
-										-{calculateDiscount(product.price, product.comparePrice)}%
+										-{calculateDiscount(product.price, product.compare_price)}%
 									</div>
 								)}
 								<button className="absolute top-2 right-2 p-2 bg-white/80 rounded-full">
@@ -182,36 +176,35 @@ const Home = () => {
 										{product.name}
 									</h4>
 								</Link>
-								<p className="text-sm text-gray-500 mb-2">{product.category}</p>
+								<p className="text-sm text-gray-500 mb-2">{product.categories?.name || 'No category'}</p>
 
-								{/* Rating */}
-								{product.rating && (
-									<div className="flex items-center mb-2">
-										<div className="flex items-center">
-											<Star
-												size={14}
-												className="text-yellow-400 fill-current"
-											/>
-											<span className="text-sm text-gray-600 ml-1">
-												{product.rating}
-											</span>
-										</div>
-										{product.reviewCount && (
-											<span className="text-sm text-gray-400 ml-1">
-												({product.reviewCount})
-											</span>
+										{product.average_rating && (
+											<div className="flex items-center mb-2">
+												<div className="flex items-center">
+													<Star
+														size={14}
+														className="text-yellow-400 fill-current"
+													/>
+													<span className="text-sm text-gray-600 ml-1">
+														{product.average_rating}
+													</span>
+												</div>
+												{product.review_count && (
+													<span className="text-sm text-gray-400 ml-1">
+														({product.review_count})
+													</span>
+												)}
+											</div>
 										)}
-									</div>
-								)}
 
 								<div className="flex items-center justify-between">
 									<div className="flex items-center space-x-2">
 										<span className="text-lg font-bold text-gray-900">
 											{formatPrice(product.price)}
 										</span>
-										{product.comparePrice && (
+										{product.compare_price && (
 											<span className="text-sm text-gray-400 line-through">
-												{formatPrice(product.comparePrice)}
+												{formatPrice(product.compare_price)}
 											</span>
 										)}
 									</div>

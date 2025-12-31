@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import {
 	ArrowLeft,
@@ -11,30 +11,102 @@ import {
 } from 'lucide-react'
 import { useCart } from '../context/CartContext'
 import { Button } from '@/components/ui/button'
-import { getProductById, getProductBySlug } from '../data/mockProducts'
+import { productService } from '../services/productService'
 
 const ProductDetail = () => {
 	const { id } = useParams()
 	const { addToCart } = useCart()
-	const [quantity, setQuantity] = useState(1)
-	const [selectedImage, setSelectedImage] = useState(0)
-	const [selectedColor, setSelectedColor] = useState('brown')
-	const [selectedSize, setSelectedSize] = useState('medium')
+	 const [product, setProduct] = useState(null)
+	 const [loading, setLoading] = useState(true)
+	 const [error, setError] = useState(null)
+	 const [quantity, setQuantity] = useState(1)
+	 const [selectedImage, setSelectedImage] = useState(0)
+	 const [selectedColor, setSelectedColor] = useState('')
+	 const [selectedSize, setSelectedSize] = useState('')
 
-	// 从 mockProducts 获取真实产品数据
-	// 先尝试通过数字 ID 查找，如果失败则尝试通过 slug 查找
-	let productData = getProductById(id)
-	if (!productData) {
-		productData = getProductBySlug(id)
+	 // 从 Supabase 获取真实产品数据
+	 useEffect(() => {
+		 const loadProduct = async () => {
+			 try {
+				 setLoading(true)
+				 let result
+				 
+				 // 先尝试通过数字 ID 查找，如果失败则尝试通过 slug 查找
+				 if (id.match(/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i)) {
+					 // UUID format - search by ID
+					 result = await productService.getProductById(id)
+				 } else {
+					 // Slug format - search by slug
+					 result = await productService.getProductBySlug(id)
+				 }
+				 
+				 if (result.error || !result.data) {
+					 setError('Product not found')
+				 } else {
+					 const productData = result.data
+					 setProduct({
+						 ...productData,
+						 // 适配现有的UI结构
+						 originalPrice: productData.compare_price,
+						 reviews: productData.review_count || 0, // 评价数量
+						 rating: productData.average_rating || 4.5, // 平均评分
+						 colors: [
+							 { name: 'brown', color: '#8B4513', available: true },
+							 { name: 'black', color: '#000000', available: true },
+							 { name: 'white', color: '#FFFFFF', available: true }
+						 ],
+						 sizes: [
+							 { name: 'small', available: true },
+							 { name: 'medium', available: true },
+							 { name: 'large', available: true }
+						 ],
+						 features: [
+							 'Premium construction',
+							 'Modern design',
+							 'High-quality materials',
+							 'Durable and long-lasting',
+							 '1-year warranty included'
+						 ],
+						 inStock: productData.inventory_quantity > 0
+					 })
+					 
+					 // 设置默认选项
+					 if (productData.variants?.colors?.length > 0) {
+						 setSelectedColor(productData.variants.colors[0])
+					 }
+					 if (productData.variants?.materials?.length > 0) {
+						 setSelectedSize(productData.variants.materials[0])
+					 }
+				 }
+			 } catch (err) {
+				 console.error('Error loading product:', err)
+				 setError('Failed to load product')
+			 } finally {
+				 setLoading(false)
+			 }
+		 }
+		 
+		 loadProduct()
+	 }, [id])
+
+	// 加载和错误状态处理
+	if (loading) {
+		return (
+			<div className="min-h-screen flex items-center justify-center">
+				<div className="text-center">
+					<div className="animate-spin rounded-full h-12 w-12 border-b-2 border-yellow-500 mx-auto mb-4"></div>
+					<p className="text-gray-600">Loading product...</p>
+				</div>
+			</div>
+		)
 	}
 
-	// 如果产品不存在，显示404或重定向
-	if (!productData) {
+	if (error || !product) {
 		return (
 			<div className="min-h-screen flex items-center justify-center">
 				<div className="text-center">
 					<h1 className="text-2xl font-bold text-gray-900 mb-4">
-						Product Not Found
+						{error || 'Product Not Found'}
 					</h1>
 					<Link to="/" className="text-yellow-500 hover:text-yellow-600">
 						Go Home
@@ -42,31 +114,6 @@ const ProductDetail = () => {
 				</div>
 			</div>
 		)
-	}
-
-	const product = {
-		...productData,
-		// 适配现有的UI结构
-		originalPrice: productData.comparePrice,
-		reviews: productData.reviewCount,
-		colors: [
-			{ name: 'brown', color: '#8B4513', available: true },
-			{ name: 'black', color: '#000000', available: true },
-			{ name: 'white', color: '#FFFFFF', available: true }
-		],
-		sizes: [
-			{ name: 'small', available: true },
-			{ name: 'medium', available: true },
-			{ name: 'large', available: true }
-		],
-		features: [
-			'Premium construction',
-			'Modern design',
-			'High-quality materials',
-			'Durable and long-lasting',
-			'1-year warranty included'
-		],
-		inStock: productData.inventoryQuantity > 0
 	}
 
 	const reviews = [

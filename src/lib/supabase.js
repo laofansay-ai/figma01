@@ -3,12 +3,26 @@ import { createClient } from '@supabase/supabase-js'
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey)
+// Check if Supabase is configured
+const isSupabaseConfigured = supabaseUrl && supabaseAnonKey
+
+// Create client only if configured, otherwise use null
+export const supabase = isSupabaseConfigured 
+  ? createClient(supabaseUrl, supabaseAnonKey)
+  : null
+
+// Helper function to check if Supabase is available
+export const isSupabaseAvailable = () => {
+  return isSupabaseConfigured && supabase !== null
+}
 
 // Auth helpers
 export const auth = {
   // Sign up new user
   signUp: async (email, password, userData = {}) => {
+    if (!isSupabaseAvailable()) {
+      return { data: null, error: new Error('Supabase not configured') }
+    }
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
@@ -21,6 +35,9 @@ export const auth = {
 
   // Sign in user
   signIn: async (email, password) => {
+    if (!isSupabaseAvailable()) {
+      return { data: null, error: new Error('Supabase not configured') }
+    }
     const { data, error } = await supabase.auth.signInWithPassword({
       email,
       password
@@ -30,18 +47,28 @@ export const auth = {
 
   // Sign out user
   signOut: async () => {
+    if (!isSupabaseAvailable()) {
+      return { error: new Error('Supabase not configured') }
+    }
     const { error } = await supabase.auth.signOut()
     return { error }
   },
 
   // Get current user
   getCurrentUser: async () => {
+    if (!isSupabaseAvailable()) {
+      return { user: null, error: new Error('Supabase not configured') }
+    }
     const { data: { user }, error } = await supabase.auth.getUser()
     return { user, error }
   },
 
   // Listen to auth changes
   onAuthStateChange: (callback) => {
+    if (!isSupabaseAvailable()) {
+      // Return a mock subscription for compatibility
+      return { data: { subscription: { unsubscribe: () => {} } } }
+    }
     return supabase.auth.onAuthStateChange(callback)
   }
 }
@@ -51,6 +78,9 @@ export const db = {
   // Products
   products: {
     getAll: async () => {
+      if (!isSupabaseAvailable()) {
+        return { data: [], error: new Error('Supabase not configured') }
+      }
       const { data, error } = await supabase
         .from('products')
         .select('*')
@@ -59,6 +89,9 @@ export const db = {
     },
 
     getById: async (id) => {
+      if (!isSupabaseAvailable()) {
+        return { data: null, error: new Error('Supabase not configured') }
+      }
       const { data, error } = await supabase
         .from('products')
         .select('*')
@@ -68,6 +101,9 @@ export const db = {
     },
 
     getByCategory: async (category) => {
+      if (!isSupabaseAvailable()) {
+        return { data: [], error: new Error('Supabase not configured') }
+      }
       const { data, error } = await supabase
         .from('products')
         .select('*')
@@ -77,6 +113,9 @@ export const db = {
     },
 
     search: async (query) => {
+      if (!isSupabaseAvailable()) {
+        return { data: [], error: new Error('Supabase not configured') }
+      }
       const { data, error } = await supabase
         .from('products')
         .select('*')
@@ -89,6 +128,9 @@ export const db = {
   // Categories
   categories: {
     getAll: async () => {
+      if (!isSupabaseAvailable()) {
+        return { data: [], error: new Error('Supabase not configured') }
+      }
       const { data, error } = await supabase
         .from('categories')
         .select('*')
@@ -100,6 +142,9 @@ export const db = {
   // Orders
   orders: {
     create: async (orderData) => {
+      if (!isSupabaseAvailable()) {
+        return { data: null, error: new Error('Supabase not configured') }
+      }
       const { data, error } = await supabase
         .from('orders')
         .insert(orderData)
@@ -109,6 +154,9 @@ export const db = {
     },
 
     getByUserId: async (userId) => {
+      if (!isSupabaseAvailable()) {
+        return { data: [], error: new Error('Supabase not configured') }
+      }
       const { data, error } = await supabase
         .from('orders')
         .select(`
@@ -127,6 +175,9 @@ export const db = {
   // User profiles
   profiles: {
     get: async (userId) => {
+      if (!isSupabaseAvailable()) {
+        return { data: null, error: new Error('Supabase not configured') }
+      }
       const { data, error } = await supabase
         .from('profiles')
         .select('*')
@@ -136,6 +187,9 @@ export const db = {
     },
 
     update: async (userId, profileData) => {
+      if (!isSupabaseAvailable()) {
+        return { data: null, error: new Error('Supabase not configured') }
+      }
       const { data, error } = await supabase
         .from('profiles')
         .update(profileData)

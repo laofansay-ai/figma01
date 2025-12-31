@@ -4,6 +4,7 @@ import { ArrowLeft, CreditCard, HomeIcon, Package, CheckCircle } from 'lucide-re
 import { useCart } from '../context/CartContext'
 import { useAuth } from '../hooks/useAuth'
 import { orderService } from '../services/orderService'
+import { notificationService } from '../services/notificationService'
 
 const Checkout = () => {
   const { user } = useAuth()
@@ -53,15 +54,19 @@ const Checkout = () => {
         userId: user?.id || null,
         shippingAddress,
         paymentMethod,
+        shippingMethod: 'standard', // 默认配送方式
         items: items.map(item => ({
           productId: item.productId,
           quantity: item.quantity,
-          unitPrice: item.unitPrice,
-          totalPrice: item.totalPrice,
-          variantOptions: item.variantOptions
+          unitPrice: item.product?.price || 0,
+          totalPrice: (item.product?.price || 0) * item.quantity,
+          variantOptions: item.variantOptions,
+          product: item.product // 传递产品数据用于order_items表
         })),
         summary: summary
       }
+
+      console.log('Creating order for user:', user?.id, 'Order data:', orderData)
 
       const { data, error: orderError } = await orderService.createOrder(orderData)
 
@@ -69,11 +74,15 @@ const Checkout = () => {
         throw new Error(orderError.message || 'Failed to place order.')
       }
 
+      // 发送订单确认通知
+      notificationService.sendOrderConfirmation(data)
+
       setOrderPlaced(data)
       clearCart() // Clear cart after successful order
       refreshCart() // Refresh cart context
     } catch (err) {
       setError(err.message)
+      notificationService.showError('Failed to create order. Please try again.')
       console.error('Checkout error:', err)
     } finally {
       setIsProcessing(false)

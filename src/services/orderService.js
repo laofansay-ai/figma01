@@ -1,93 +1,194 @@
-import { supabase } from '../lib/supabase'
+import { supabase, isSupabaseAvailable } from '../lib/supabase'
 import { cartService } from './cartService'
 
 class OrderService {
   constructor() {
-    this.useMockData = true // Set to false when Supabase is configured
+    this.useMockData = false // 使用真实的Supabase数据库
   }
 
   async createOrder(orderData) {
-    if (this.useMockData) {
-      console.log('Mock: Creating order for user', orderData.userId, 'with total', orderData.summary.total)
-      // Simulate order creation
-      const mockOrderId = `ORD-${Date.now()}`
-      const mockOrderNumber = this.generateOrderNumber()
-      const mockOrder = {
-        id: mockOrderId,
-        order_number: mockOrderNumber,
-        user_id: orderData.userId,
-        shipping_address: orderData.shippingAddress,
-        payment_method: orderData.paymentMethod,
-        items: orderData.items,
-        total_amount: orderData.summary.total,
-        status: 'pending',
-        created_at: new Date().toISOString()
-      }
-      // Clear local cart after mock order creation
-      cartService.clearLocalCart()
-      
-      // Store to localStorage for mock persistence
-      const existingOrders = JSON.parse(localStorage.getItem('orders') || '[]')
-      existingOrders.push(mockOrder)
-      localStorage.setItem('orders', JSON.stringify(existingOrders))
-
-      return { data: mockOrder, error: null }
+    console.log('Creating order for user:', orderData.userId)
+    
+    // Check if Supabase is configured
+    if (!isSupabaseAvailable()) {
+      console.warn('Supabase not configured, using mock data')
+      return this.createMockOrder(orderData)
     }
-
+    
     try {
+      // Generate order number using the database function
+      const { data: orderNumberResult, error: orderNumberError } = await supabase
+        .rpc('generate_order_number')
+      
+      if (orderNumberError) {
+        console.error('Error generating order number:', orderNumberError)
+        throw orderNumberError
+      }
+      
+      const orderNumber = orderNumberResult
+      
+      // Create the order record
       const { data: order, error: orderError } = await supabase
         .from('orders')
         .insert({
+          order_number: orderNumber,
           user_id: orderData.userId,
+          subtotal: orderData.summary.subtotal,
+          tax_amount: orderData.summary.tax,
+          shipping_amount: orderData.summary.shipping,
+          total_amount: orderData.summary.total,
+          customer_email: orderData.shippingAddress.email,
+          customer_phone: orderData.shippingAddress.phone,
           shipping_address: orderData.shippingAddress,
           payment_method: orderData.paymentMethod,
-          total_amount: orderData.summary.total,
-          status: 'pending' // Initial status
+          shipping_method: orderData.shippingMethod || 'standard',
+          status: 'pending',
+          payment_status: 'pending'
         })
         .select()
         .single()
 
-      if (orderError) throw orderError
+      if (orderError) {
+        console.error('Error creating order:', orderError)
+        throw orderError
+      }
 
-      const orderItems = orderData.items.map(item => ({
-        order_id: order.id,
-        product_id: item.productId,
-        quantity: item.quantity,
-        unit_price: item.unitPrice,
-        variant_options: item.variantOptions
-      }))
+      console.log('Order created successfully:', order)
+
+      // Create order items with enhanced product data
+      const orderItemsPromises = orderData.items.map(async (item) => {
+        let product = item.product
+        
+        // 如果没有产品数据，尝试从数据库获取
+        if (!product && item.productId) {
+          try {
+            const { productService } = await import('./productService')
+            const { data: productData } = await productService.getProductById(item.productId)
+            product = productData
+          } catch (error) {
+            console.error('Error fetching product for order:', error)
+          }
+        }
+        
+        return {
+          order_id: order.id,
+          product_id: item.productId,
+          product_name: product?.name || item.name || 'Unknown Product',
+          product_sku: product?.sku || '',
+          product_image: product?.images?.[0] || '',
+          quantity: item.quantity,
+          unit_price: product?.price || item.unitPrice || 0,
+          total_price: (product?.price || item.unitPrice || 0) * item.quantity,
+          variant_options: item.variantOptions || {}
+        }
+      })
+      
+      const orderItems = await Promise.all(orderItemsPromises)
 
       const { error: orderItemsError } = await supabase
         .from('order_items')
         .insert(orderItems)
 
-      if (orderItemsError) throw orderItemsError
+      if (orderItemsError) {
+        console.error('Error creating order items:', orderItemsError)
+        throw orderItemsError
+      }
+
+      console.log('Order items created successfully')
 
       // Clear user's cart after successful order creation
-      await cartService.clearCart(orderData.userId)
+      if (orderData.userId) {
+        await cartService.clearCart(orderData.userId)
+      }
 
       return { data: order, error: null }
     } catch (error) {
-      console.error('Error creating order:', error)
-      return { data: null, error }
+      console.error('Error creating order in Supabase, falling back to mock:', error)
+      return this.createMockOrder(orderData)
     }
   }
 
-  async getOrderById(orderId, userId = null) {
-    if (this.useMockData) {
-      console.log('Mock: Fetching order', orderId)
-      const allOrders = JSON.parse(localStorage.getItem('orders') || '[]')
-      const order = allOrders.find(o => o.id === orderId && (!userId || o.user_id === userId))
-      return { data: order, error: order ? null : 'Order not found' }
+  // Mock order creation for fallback
+  async createMockOrder(orderData) {
+    console.log('Creating mock order for user:', orderData.userId)
+    
+    const mockOrderId = `ORD-${Date.now()}`
+    const mockOrderNumber = this.generateOrderNumber()
+    
+    const mockOrder = {
+      id: mockOrderId,
+      order_number: mockOrderNumber,
+      user_id: orderData.userId,
+      subtotal: orderData.summary.subtotal,
+      tax_amount: orderData.summary.tax,
+      shipping_amount: orderData.summary.shipping,
+      total_amount: orderData.summary.total,
+      customer_email: orderData.shippingAddress.email,
+      customer_phone: orderData.shippingAddress.phone,
+      shipping_address: orderData.shippingAddress,
+      payment_method: orderData.paymentMethod,
+      shipping_method: orderData.shippingMethod || 'standard',
+      status: 'pending',
+      payment_status: 'pending',
+      created_at: new Date().toISOString(),
+      order_items: await Promise.all(orderData.items.map(async (item) => {
+        let product = item.product
+        
+        // 如果没有产品数据，尝试从数据库获取
+        if (!product && item.productId) {
+          try {
+            const { productService } = await import('./productService')
+            const { data: productData } = await productService.getProductById(item.productId)
+            product = productData
+          } catch (error) {
+            console.error('Error fetching product for mock order:', error)
+          }
+        }
+        
+        return {
+          id: `item-${Date.now()}-${Math.random()}`,
+          product_id: item.productId,
+          product_name: product?.name || item.name || 'Unknown Product',
+          product_image: product?.images?.[0] || '',
+          quantity: item.quantity,
+          unit_price: product?.price || item.unitPrice || 0,
+          total_price: (product?.price || item.unitPrice || 0) * item.quantity,
+          variant_options: item.variantOptions || {},
+          products: product // 保留产品数据用于显示
+        }
+      }))
     }
+    
+    // Store to localStorage
+    const existingOrders = JSON.parse(localStorage.getItem('orders') || '[]')
+    existingOrders.push(mockOrder)
+    localStorage.setItem('orders', JSON.stringify(existingOrders))
+    
+    console.log('Mock order stored:', mockOrder)
+    
+    // Clear local cart
+    cartService.clearLocalCart()
+    
+    return { data: mockOrder, error: null }
+  }
 
+  async getOrderById(orderId, userId = null) {
+    console.log('Fetching order from Supabase:', orderId)
+    
     try {
       let query = supabase
         .from('orders')
         .select(`
           *,
-          order_items (*,
-            products (id, name, images, slug)
+          order_items (
+            *,
+            products (
+              id,
+              name,
+              images,
+              slug,
+              price
+            )
           )
         `)
         .eq('id', orderId)
@@ -98,7 +199,18 @@ class OrderService {
 
       const { data, error } = await query.single()
 
-      return { data, error }
+      if (error) {
+        // Handle case where order not found
+        if (error.code === 'PGRST116') {
+          console.log('Order not found:', orderId)
+          return { data: null, error: null }
+        }
+        console.error('Error fetching order from Supabase:', error)
+        return { data: null, error }
+      }
+
+      console.log('Order fetched successfully:', data)
+      return { data, error: null }
     } catch (error) {
       console.error('Error fetching order:', error)
       return { data: null, error }
@@ -106,30 +218,58 @@ class OrderService {
   }
 
   async getOrdersByUserId(userId) {
-    if (this.useMockData) {
-      console.log('Mock: Fetching orders for user', userId)
-      const allOrders = JSON.parse(localStorage.getItem('orders') || '[]')
-      const userOrders = allOrders.filter(order => order.user_id === userId)
-      return { data: userOrders, error: null }
+    console.log('Fetching orders for user:', userId)
+    
+    // Check if Supabase is configured
+    if (!isSupabaseAvailable()) {
+      console.warn('Supabase not configured, using localStorage')
+      return this.getMockUserOrders(userId)
     }
-
+    
     try {
       const { data, error } = await supabase
         .from('orders')
         .select(`
           *,
-          order_items (*,
-            products (id, name, images, slug)
+          order_items (
+            *,
+            products (
+              id,
+              name,
+              images,
+              slug,
+              price
+            )
           )
         `)
         .eq('user_id', userId)
         .order('created_at', { ascending: false })
 
-      return { data, error }
+      if (error) {
+        console.error('Error fetching orders from Supabase:', error)
+        throw error
+      }
+
+      console.log('Orders fetched successfully:', data)
+      return { data, error: null }
     } catch (error) {
-      console.error('Error fetching user orders:', error)
-      return { data: null, error }
+      console.error('Error fetching user orders, falling back to localStorage:', error)
+      return this.getMockUserOrders(userId)
     }
+  }
+
+  // Get orders from localStorage
+  getMockUserOrders(userId) {
+    console.log('Fetching orders from localStorage for user:', userId)
+    const allOrders = JSON.parse(localStorage.getItem('orders') || '[]')
+    const userOrders = allOrders.filter(order => order.user_id === userId)
+    console.log('Found orders in localStorage:', userOrders)
+    return { data: userOrders, error: null }
+  }
+
+  // Alias method for backward compatibility
+  async getUserOrders(userId) {
+    return this.getOrdersByUserId(userId)
   }
 
   generateOrderNumber() {

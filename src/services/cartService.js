@@ -1,9 +1,9 @@
 import { supabase } from '../lib/supabase'
-import { getProductById } from '../data/mockProducts'
+import { productService } from './productService'
 
 class CartService {
   constructor() {
-    this.useMockData = true // Set to false when Supabase is configured
+    this.useMockData = false // 使用真实的 Supabase 数据库
     this.storageKey = 'ulmo_cart'
   }
 
@@ -47,13 +47,18 @@ class CartService {
 
     try {
       // Check if item already exists
-      const { data: existingItem } = await supabase
+      const { data: existingItem, error: existingError } = await supabase
         .from('cart_items')
         .select('*')
         .eq('user_id', userId)
         .eq('product_id', productId)
         .eq('variant_options', JSON.stringify(variantOptions))
-        .single()
+        .maybeSingle()  // 使用 maybeSingle() 来避免 PGRST116 错误
+
+      if (existingError) {
+        console.error('Error checking existing cart item:', existingError)
+        throw existingError
+      }
 
       if (existingItem) {
         // Update quantity
@@ -62,7 +67,7 @@ class CartService {
           .update({ quantity: existingItem.quantity + quantity })
           .eq('id', existingItem.id)
           .select()
-          .single()
+          .maybeSingle()  // 使用 maybeSingle() 避免 PGRST116 错误
 
         return { data, error }
       } else {
@@ -76,7 +81,7 @@ class CartService {
             variant_options: variantOptions
           })
           .select()
-          .single()
+          .maybeSingle()  // 使用 maybeSingle() 避免 PGRST116 错误
 
         return { data, error }
       }
@@ -103,7 +108,7 @@ class CartService {
         .eq('id', itemId)
         .eq('user_id', userId)
         .select()
-        .single()
+        .maybeSingle()  // 使用 maybeSingle() 避免 PGRST116 错误
 
       return { data, error }
     } catch (error) {
@@ -152,26 +157,55 @@ class CartService {
   }
 
   // Local storage methods for guest users
-  getLocalCartItems() {
+  async getLocalCartItems() {
     try {
       const cartData = localStorage.getItem(this.storageKey)
       const items = cartData ? JSON.parse(cartData) : []
       
+      // 导入 productService 来获取产品数据
+      const { productService } = await import('./productService')
+      
       // Enrich with product data
-      const enrichedItems = items.map(item => {
-        // 直接使用 getProductById 获取产品数据
-        const product = getProductById(item.productId)
-        
-        return {
-          id: item.id,
-          productId: item.productId,
-          quantity: item.quantity,
-          variantOptions: item.variantOptions || {},
-          product: product,
-          unitPrice: product?.price || 0,
-          totalPrice: (product?.price || 0) * item.quantity
-        }
-      }).filter(item => item.product) // Remove items with missing products
+      const enrichedItems = await Promise.all(
+        items.map(async (item) => {
+          try {
+            // 获取产品详细信息
+            const { data: product } = await productService.getProductById(item.productId)
+            
+            return {
+              id: item.id,
+              productId: item.productId,
+              product_id: item.productId, // 为了兼容性
+              quantity: item.quantity,
+              variantOptions: item.variantOptions || {},
+              variant_options: item.variantOptions || {},
+              product: product,
+              products: product, // 为了兼容数据库结构
+              unitPrice: product?.price || 0,
+              unit_price: product?.price || 0,
+              totalPrice: (product?.price || 0) * item.quantity,
+              total_price: (product?.price || 0) * item.quantity
+            }
+          } catch (error) {
+            console.error(`Error fetching product ${item.productId}:`, error)
+            // 如果获取产品失败，返回基本信息
+            return {
+              id: item.id,
+              productId: item.productId,
+              product_id: item.productId,
+              quantity: item.quantity,
+              variantOptions: item.variantOptions || {},
+              variant_options: item.variantOptions || {},
+              product: null,
+              products: null,
+              unitPrice: 0,
+              unit_price: 0,
+              totalPrice: 0,
+              total_price: 0
+            }
+          }
+        })
+      )
 
       console.log('getLocalCartItems result:', {
         rawItems: items,
@@ -186,8 +220,26 @@ class CartService {
     }
   }
 
-  addToLocalCart(productId, quantity, variantOptions = {}) {
+  async addToLocalCart(productId, quantity, variantOptions = {}) {
     try {
+      // 获取产品信息并存储到本地购物车
+      let productInfo = null
+      try {
+        const { productService } = await import('./productService')
+        const { data: product } = await productService.getProductById(productId)
+        if (product) {
+          productInfo = {
+            id: product.id,
+            name: product.name,
+            price: product.price,
+            images: product.images,
+            slug: product.slug
+          }
+        }
+      } catch (error) {
+        console.error('获取产品信息失败:', error)
+      }
+      
       const cartData = localStorage.getItem(this.storageKey)
       const items = cartData ? JSON.parse(cartData) : []
       
@@ -200,18 +252,30 @@ class CartService {
       if (existingItemIndex >= 0) {
         // Update quantity
         items[existingItemIndex].quantity += quantity
+        // 更新产品信息（如果有）
+        if (productInfo) {
+          items[existingItemIndex].product = productInfo
+        }
       } else {
         // Add new item
-        items.push({
+        const newItem = {
           id: Date.now().toString(),
           productId,
           quantity,
           variantOptions,
           addedAt: new Date().toISOString()
-        })
+        }
+        
+        // 添加产品信息（如果有）
+        if (productInfo) {
+          newItem.product = productInfo
+        }
+        
+        items.push(newItem)
       }
 
       localStorage.setItem(this.storageKey, JSON.stringify(items))
+      console.log('商品已添加到本地购物车:', { productId, quantity, productInfo })
       return { data: { success: true }, error: null }
     } catch (error) {
       console.error('Error adding to local cart:', error)

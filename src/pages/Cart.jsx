@@ -102,9 +102,14 @@ const Cart = () => {
                     )}
                   </div>
                   <div className="flex items-center justify-between">
-                    <span className="text-lg font-bold text-yellow-500">
-                      ${item.product?.price || item.price}
-                    </span>
+                    <div className="flex flex-col">
+                      <span className="text-lg font-bold text-yellow-500">
+                        ${((item.product?.price || item.unitPrice || item.unit_price || 0) * item.quantity).toFixed(2)}
+                      </span>
+                      <span className="text-sm text-gray-500">
+                        ${(item.product?.price || item.unitPrice || item.unit_price || 0).toFixed(2)} each
+                      </span>
+                    </div>
                     <div className="flex items-center space-x-3">
                       {/* Quantity Controls */}
                       <div className="flex items-center border border-gray-300 rounded-lg">

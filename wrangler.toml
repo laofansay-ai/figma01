@@ -1,0 +1,57 @@
+# Cloudflare Pages 配置文件
+name = "ulmo-ecommerce"
+compatibility_date = "2024-09-16"
+
+# 构建配置
+[build]
+command = "pnpm install && pnpm build"
+cwd = ""
+watch_dir = "src"
+
+# 构建输出配置
+[build.upload]
+format = "directory"
+dir = "dist"
+
+# 环境变量（开发环境）
+[env.development.vars]
+NODE_ENV = "development"
+
+# 环境变量（生产环境）
+[env.production.vars]
+NODE_ENV = "production"
+
+# Pages 配置
+[pages]
+# 自定义域名（可选）
+# custom_domain = "your-domain.com"
+
+# 路由重定向规则（SPA支持）
+[[pages.redirects]]
+from = "/*"
+to = "/index.html"
+status = 200
+
+# 缓存配置
+[[pages.headers]]
+for = "/assets/*"
+[pages.headers.values]
+"Cache-Control" = "public, max-age=31536000, immutable"
+
+[[pages.headers]]
+for = "*.css"
+[pages.headers.values]
+"Cache-Control" = "public, max-age=31536000, immutable"
+
+[[pages.headers]]
+for = "*.js"
+[pages.headers.values]
+"Cache-Control" = "public, max-age=31536000, immutable"
+
+# 安全头配置
+[[pages.headers]]
+for = "/*"
+[pages.headers.values]
+"X-Frame-Options" = "DENY"
+"X-Content-Type-Options" = "nosniff"
+"Referrer-Policy" = "strict-origin-when-cross-origin"

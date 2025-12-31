@@ -12,6 +12,7 @@ import Wishlist from './pages/Wishlist'
 import Account from './pages/Account'
 import AuthTestPage from './components/auth/AuthTestPage'
 import CartTestPage from './pages/CartTestPage'
+import CartImageTestPage from './pages/CartImageTestPage'
 import Navigation from './components/common/Navigation'
 import './App.css'
 
@@ -34,6 +35,7 @@ function App() {
 							<Route path="/account" element={<Account />} />
 							<Route path="/auth-test" element={<AuthTestPage />} />
 							<Route path="/cart-test" element={<CartTestPage />} />
+							<Route path="/cart-image-test" element={<CartImageTestPage />} />
 						</Routes>
 						<Navigation />
 					</div>

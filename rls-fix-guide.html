@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Supabase RLS 策略修复工具</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: 50px auto; padding: 20px; }
+        .container { background: #f5f5f5; padding: 20px; border-radius: 8px; }
+        .sql-box { background: #1e1e1e; color: #d4d4d4; padding: 15px; border-radius: 5px; font-family: 'Consolas', monospace; white-space: pre-wrap; }
+        .step { margin: 20px 0; padding: 15px; background: white; border-radius: 5px; border-left: 4px solid #007acc; }
+        .warning { background: #fff3cd; border-left-color: #ffc107; }
+        .success { background: #d1ecf1; border-left-color: #17a2b8; }
+        button { background: #007acc; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; }
+        button:hover { background: #005a9e; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔧 Supabase RLS 策略修复指南</h1>
+        
+        <div class="step warning">
+            <h3>⚠️ 问题说明</h3>
+            <p>你遇到的错误 <code>"new row violates row-level security policy for table 'orders'"</code> 是因为 orders 和 order_items 表缺少 INSERT 权限的 RLS 策略。</p>
+        </div>
+
+        <div class="step">
+            <h3>📝 第一步：复制 SQL 修复脚本</h3>
+            <button onclick="copyToClipboard('sqlScript')">复制 SQL 脚本</button>
+            <div id="sqlScript" class="sql-box">-- 修复 orders 表的 RLS 策略
+CREATE POLICY "Users can create own orders" 
+  ON orders FOR INSERT 
+  WITH CHECK (auth.uid() = user_id);
+
+-- 修复 order_items 表的 RLS 策略
+CREATE POLICY "Users can create order items for own orders" 
+  ON order_items FOR INSERT 
+  WITH CHECK (
+    EXISTS (
+      SELECT 1 FROM orders 
+      WHERE orders.id = order_items.order_id 
+      AND orders.user_id = auth.uid()
+    )
+  );</div>
+        </div>
+
+        <div class="step">
+            <h3>🌐 第二步：在 Supabase Dashboard 中执行</h3>
+            <ol>
+                <li>打开 <a href="https://app.supabase.com" target="_blank">Supabase Dashboard</a></li>
+                <li>选择你的项目：<strong>gkzsushdwnmhcpiwcwip</strong></li>
+                <li>在左侧菜单点击 <strong>"SQL Editor"</strong></li>
+                <li>粘贴上面复制的 SQL 脚本</li>
+                <li>点击 <strong>"Run"</strong> 按钮执行</li>
+            </ol>
+        </div>
+
+        <div class="step success">
+            <h3>✅ 第三步：验证修复结果</h3>
+            <p>执行完成后，你应该看到类似这样的成功消息：</p>
+            <div class="sql-box">CREATE POLICY
+CREATE POLICY</div>
+            <p>现在你可以重新测试订单创建功能了！</p>
+        </div>
+
+        <div class="step">
+            <h3>🧪 第四步：测试订单创建</h3>
+            <p>回到你的应用程序，尝试完成一个订单。现在应该可以成功创建并保存到 Supabase 数据库了。</p>
+        </div>
+
+        <div class="step warning">
+            <h3>📋 检查清单</h3>
+            <ul>
+                <li>✅ 环境变量已配置（.env 文件）</li>
+                <li>✅ Supabase 连接正常</li>
+                <li>⚠️ RLS 策略需要修复（当前步骤）</li>
+                <li>🔄 订单创建功能测试</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        function copyToClipboard(elementId) {
+            const element = document.getElementById(elementId);
+            const text = element.textContent;
+            navigator.clipboard.writeText(text).then(() => {
+                alert('SQL 脚本已复制到剪贴板！');
+            });
+        }
+    </script>
+</body>
+</html>

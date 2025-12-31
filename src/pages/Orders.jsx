@@ -23,7 +23,9 @@ const Orders = () => {
   const loadOrders = async () => {
     setLoading(true)
     try {
+      console.log('Loading orders for user:', user?.id)
       const { data, error } = await orderService.getUserOrders(user?.id)
+      console.log('Orders loaded:', data, 'Error:', error)
       if (error) {
         console.error('Error loading orders:', error)
       } else {
@@ -210,28 +212,28 @@ const Orders = () => {
 
                 {/* Order Items */}
                 <div className="space-y-3 mb-4">
-                  {order.items?.slice(0, 2).map((item, index) => (
+                  {order.order_items?.slice(0, 2).map((item, index) => (
                     <div key={index} className="flex items-center space-x-3">
                       <div className="w-12 h-12 bg-gray-100 rounded-lg overflow-hidden">
                         <img
-                          src={item.product?.images?.[0] || '/api/placeholder/48/48'}
-                          alt={item.product?.name || 'Product'}
+                          src={item.product_image || item.products?.images?.[0] || '/api/placeholder/48/48'}
+                          alt={item.product_name || item.products?.name || 'Product'}
                           className="w-full h-full object-cover"
                         />
                       </div>
                       <div className="flex-1 min-w-0">
                         <p className="text-sm font-medium text-gray-900 truncate">
-                          {item.product?.name || 'Product'}
+                          {item.product_name || item.products?.name || 'Product'}
                         </p>
                         <p className="text-xs text-gray-500">
-                          Qty: {item.quantity} • {formatPrice(item.unitPrice || item.totalPrice / item.quantity)}
+                          Qty: {item.quantity} • {formatPrice(item.unit_price || 0)}
                         </p>
                       </div>
                     </div>
                   ))}
-                  {order.items?.length > 2 && (
+                  {order.order_items?.length > 2 && (
                     <p className="text-xs text-gray-500 pl-15">
-                      +{order.items.length - 2} more items
+                      +{order.order_items.length - 2} more items
                     </p>
                   )}
                 </div>
