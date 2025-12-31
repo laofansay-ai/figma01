@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import {
 	Bell,
@@ -10,11 +10,9 @@ import {
 	Shield,
 	Truck
 } from 'lucide-react'
-import { Button } from '@/components/ui/button'
+import { Button } from '../components/ui/button'
 import { useCart } from '../context/CartContext'
 import { productService } from '../services/productService'
-import SearchBar from '../components/common/SearchBar'
-import ProductRecommendations from '../components/common/ProductRecommendations'
 
 const Home = () => {
 	const { addToCart } = useCart()
